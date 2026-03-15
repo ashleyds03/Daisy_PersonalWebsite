@@ -332,11 +332,11 @@ tailwind.config = {
           ">
             <div id="photo-circle" style="
               width:100%; height:100%; border-radius:50%;
-              overflow:hidden; cursor:pointer;
+              overflow:hidden;
               background: linear-gradient(135deg, rgba(220,180,240,0.3), rgba(180,200,250,0.3));
               display:flex; align-items:center; justify-content:center;
               position:relative;
-            " onclick="document.getElementById('photo-input').click()" title="Clicca per aggiungere la tua foto">
+            ">
               <div id="photo-placeholder" style="text-align:center; padding:16px;">
                 <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="rgba(160,120,200,0.6)" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" style="margin:0 auto 6px; display:block;">
                   <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
@@ -350,7 +350,7 @@ tailwind.config = {
             </div>
           </div>
         </div>
-        <input type="file" id="photo-input" accept="image/*" style="display:none" onchange="loadPhoto(event)"/>
+        
         <!-- floating dots -->
         <div style="position:absolute; top:-6px; right:-6px; width:14px; height:14px; border-radius:50%; background:linear-gradient(135deg,#d090b8,#a080d0); box-shadow:0 2px 8px rgba(180,140,210,0.4); animation:floatDot 3s ease-in-out infinite;"></div>
         <div style="position:absolute; bottom:8px; left:-10px; width:9px; height:9px; border-radius:50%; background:linear-gradient(135deg,#80a8e8,#a080d0); box-shadow:0 2px 6px rgba(140,160,220,0.4); animation:floatDot 4s ease-in-out infinite 1s;"></div>
@@ -621,20 +621,6 @@ tailwind.config = {
   function closeMenu(){
     document.getElementById('mobile-menu').classList.remove('open');
     document.getElementById('hamburger').classList.remove('open');
-  }
-
-  function loadPhoto(event) {
-    var file = event.target.files[0];
-    if (!file) return;
-    var reader = new FileReader();
-    reader.onload = function(e) {
-      var img = document.getElementById('photo-img');
-      var placeholder = document.getElementById('photo-placeholder');
-      img.src = e.target.result;
-      img.style.display = 'block';
-      placeholder.style.display = 'none';
-    };
-    reader.readAsDataURL(file);
   }
 </script>
 </body>
