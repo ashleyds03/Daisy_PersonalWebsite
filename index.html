@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sofia · Cybersecurity</title>
+<title>Ashley · Cybersecurity</title>
 <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet">
 <script src="https://cdn.tailwindcss.com"></script>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&family=Space+Mono:wght@400&display=swap" rel="stylesheet">
@@ -13,11 +13,7 @@ tailwind.config = {
   theme: {
     extend: {
       colors: {
-        aura1: '#e8b4c8',
-        aura2: '#c4a8e0',
-        aura3: '#a8b8f0',
-        aura4: '#f0c4a8',
-        aura5: '#f8d0e0',
+        aura1: '#e8b4c8', aura2: '#c4a8e0', aura3: '#a8b8f0', aura4: '#f0c4a8', aura5: '#f8d0e0',
       },
       fontFamily: {
         serif: ['Cormorant Garamond', 'serif'],
@@ -31,27 +27,13 @@ tailwind.config = {
 
 <style>
   :root {
-    --bg: #faf9fc;
-    --surface: rgba(255,255,255,0.55);
-    --border: rgba(200,180,220,0.3);
-    --text: #1a1520;
-    --muted: #7a6d85;
-    --accent1: #d4a0c0;
-    --accent2: #9b8fd4;
-    --accent3: #7ab0e8;
+    --bg: #faf9fc; --surface: rgba(255,255,255,0.55); --border: rgba(200,180,220,0.3);
+    --text: #1a1520; --muted: #7a6d85; --accent1: #d4a0c0; --accent2: #9b8fd4; --accent3: #7ab0e8;
   }
-
   [data-theme="dark"] {
-    --bg: #0e0b14;
-    --surface: rgba(30,22,45,0.7);
-    --border: rgba(120,90,160,0.3);
-    --text: #f0eaf8;
-    --muted: #9d8fb8;
-    --accent1: #c47faa;
-    --accent2: #8a7ec8;
-    --accent3: #6090d0;
+    --bg: #0e0b14; --surface: rgba(30,22,45,0.7); --border: rgba(120,90,160,0.3);
+    --text: #f0eaf8; --muted: #9d8fb8; --accent1: #c47faa; --accent2: #8a7ec8; --accent3: #6090d0;
   }
-
   [data-theme="dark"] body { background: var(--bg); color: var(--text); }
   [data-theme="dark"] .orb-1 { background: radial-gradient(circle, #8a3060, #601848); opacity: 0.35; }
   [data-theme="dark"] .orb-2 { background: radial-gradient(circle, #5040a0, #382888); opacity: 0.35; }
@@ -65,8 +47,7 @@ tailwind.config = {
   [data-theme="dark"] .tag { background: rgba(30,18,50,0.6); border-color: rgba(140,100,180,0.35); color: #b090d8; }
   [data-theme="dark"] .contact-input { background: rgba(20,12,36,0.5); border-color: rgba(130,95,170,0.35); color: var(--text); }
   [data-theme="dark"] .contact-input::placeholder { color: #6a5880; }
-  [data-theme="dark"] nav span[class*="display"],
-  [data-theme="dark"] footer span[class*="display"] { color: #e0d0f8 !important; }
+  [data-theme="dark"] nav span[class*="display"], [data-theme="dark"] footer span[class*="display"] { color: #e0d0f8 !important; }
   [data-theme="dark"] .hero-title { color: var(--text); }
   [data-theme="dark"] .btn-aura { background: linear-gradient(135deg, rgba(150,100,180,0.65), rgba(100,120,200,0.65)); color: #f0e8ff; box-shadow: 0 8px 32px rgba(120,80,180,0.35), inset 0 1px 0 rgba(255,255,255,0.15); }
   [data-theme="dark"] .btn-outline-aura { background: rgba(20,12,36,0.4); border-color: rgba(140,100,180,0.45); color: #b090d8; }
@@ -77,11 +58,10 @@ tailwind.config = {
   [data-theme="dark"] .social-icon { background: rgba(30,18,50,0.7); border-color: rgba(120,90,160,0.4); color: #b090d8; }
   [data-theme="dark"] .social-icon:hover { background: rgba(120,90,160,0.3); color: #d0b8f0; }
   [data-theme="dark"] #theme-toggle { background: rgba(18,10,30,0.55); border-color: rgba(130,95,170,0.4); box-shadow: 0 4px 20px rgba(80,50,130,0.3), inset 0 1px 0 rgba(255,255,255,0.07); }
-  /* footer dark */
-  [data-theme="dark"] footer {
-    background: rgba(5,3,10,0.6);
-    border-top-color: rgba(120,90,160,0.3);
-  }
+  [data-theme="dark"] footer { background: rgba(5,3,10,0.6); border-top-color: rgba(120,90,160,0.3); }
+  [data-theme="dark"] .mobile-menu { background: rgba(14,11,20,0.97); border-color: rgba(120,90,160,0.3); }
+  [data-theme="dark"] .mobile-menu a { color: #c8b8e8; }
+  [data-theme="dark"] .mobile-menu a:hover { color: #f0eaf8; }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
@@ -103,8 +83,94 @@ tailwind.config = {
   .glass-card { background:rgba(255,255,255,0.5); backdrop-filter:blur(30px) saturate(200%); -webkit-backdrop-filter:blur(30px) saturate(200%); border:1px solid rgba(255,255,255,0.7); box-shadow:0 16px 48px rgba(160,130,190,0.15),inset 0 1px 0 rgba(255,255,255,0.9),inset 0 -1px 0 rgba(200,160,220,0.1); transition:transform 0.3s ease,box-shadow 0.3s ease; }
   .glass-card:hover { transform:translateY(-4px); box-shadow:0 24px 64px rgba(160,130,190,0.22),inset 0 1px 0 rgba(255,255,255,0.9); }
 
-  nav { position:fixed; top:20px; left:50%; transform:translateX(-50%); z-index:100; width:calc(100% - 48px); max-width:960px; border-radius:100px; padding:14px 32px; }
-  @media(max-width:640px){ nav { width:calc(100% - 32px); padding:12px 20px; } }
+  /* ── NAVBAR ── */
+  nav {
+    position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
+    z-index: 100; width: calc(100% - 48px); max-width: 960px;
+    border-radius: 100px; padding: 14px 32px;
+    transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+  nav.hidden-nav {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-20px);
+    pointer-events: none;
+  }
+  @media(max-width:640px){ nav { width:calc(100% - 32px); padding:12px 20px; border-radius: 20px; } }
+
+  /* ── NAV LOGO ── */
+  .nav-logo {
+    display: flex; align-items: center; gap: 6px;
+    text-decoration: none; flex-shrink: 0;
+  }
+  .nav-logo-badge {
+    width: 36px; height: 36px; border-radius: 12px;
+    background: linear-gradient(135deg, rgba(200,160,225,0.6), rgba(160,180,240,0.6));
+    border: 1px solid rgba(255,255,255,0.7);
+    box-shadow: 0 4px 16px rgba(180,140,210,0.2), inset 0 1px 0 rgba(255,255,255,0.8);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px; font-weight: 400; color: #4a2860;
+    position: relative;
+  }
+  .nav-logo-badge::before {
+    content: '✦';
+    position: absolute; top: -5px; right: -5px;
+    font-size: 8px; color: #b080c8;
+    animation: twinkle 2s ease-in-out infinite;
+  }
+  .nav-logo-badge::after {
+    content: '✦';
+    position: absolute; bottom: -4px; left: -4px;
+    font-size: 6px; color: #90a8e0;
+    animation: twinkle 2.5s ease-in-out infinite 0.8s;
+  }
+  @keyframes twinkle { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.3;transform:scale(0.7)} }
+  [data-theme="dark"] .nav-logo-badge { color: #d0b0f0; background: linear-gradient(135deg, rgba(100,70,150,0.6), rgba(70,90,160,0.6)); }
+
+  /* ── HAMBURGER ── */
+  .hamburger {
+    display: none;
+    flex-direction: column; gap: 5px; cursor: pointer;
+    width: 32px; height: 32px; align-items: center; justify-content: center;
+    background: none; border: none; padding: 4px;
+  }
+  .hamburger span {
+    display: block; width: 20px; height: 1.5px;
+    background: #7a6d85; border-radius: 2px;
+    transition: all 0.3s ease; transform-origin: center;
+  }
+  .hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+  .hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+  .hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+  [data-theme="dark"] .hamburger span { background: #9d8fb8; }
+  @media(max-width:768px){ .hamburger { display: flex; } }
+
+  /* ── MOBILE MENU ── */
+  .mobile-menu {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 99;
+    background: rgba(250,249,252,0.97);
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+    border-bottom: 1px solid rgba(200,170,220,0.3);
+    padding: 80px 32px 32px;
+    display: flex; flex-direction: column; gap: 8px;
+    transform: translateY(-100%);
+    transition: transform 0.4s cubic-bezier(0.4,0,0.2,1);
+  }
+  .mobile-menu.open { transform: translateY(0); }
+  .mobile-menu a {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px; font-weight: 300;
+    color: #3a2850; text-decoration: none;
+    padding: 10px 0; border-bottom: 1px solid rgba(200,170,220,0.15);
+    transition: color 0.2s, padding-left 0.2s;
+  }
+  .mobile-menu a:last-child { border-bottom: none; }
+  .mobile-menu a:hover { color: #8060b0; padding-left: 8px; }
+
+  /* hide desktop nav links on mobile */
+  @media(max-width:768px){ .desktop-links { display: none !important; } }
 
   .display { font-family:'Cormorant Garamond',serif; }
   .mono    { font-family:'Space Mono',monospace; }
@@ -139,21 +205,8 @@ tailwind.config = {
   .contact-input:focus { border-color:rgba(190,150,215,0.7); box-shadow:0 0 0 4px rgba(190,150,215,0.1); }
   .contact-input::placeholder { color:#b0a0c0; }
 
-  /* ── FOOTER ── */
-  footer {
-    position: relative;
-    z-index: 2;
-    background: rgba(20,14,32,0.07);
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
-    border-top: 1px solid rgba(180,150,210,0.25);
-    padding: 40px 32px;
-    font-size: 13px;
-    color: var(--muted);
-    margin-top: 8px;
-  }
+  footer { position:relative; z-index:2; background:rgba(20,14,32,0.07); backdrop-filter:blur(24px); -webkit-backdrop-filter:blur(24px); border-top:1px solid rgba(180,150,210,0.25); padding:40px 32px; font-size:13px; color:var(--muted); margin-top:8px; }
 
-  /* ── SOCIAL ICONS ── */
   .social-icon { width:40px; height:40px; border-radius:10px; display:flex; align-items:center; justify-content:center; background:rgba(255,255,255,0.55); border:1px solid rgba(200,170,220,0.35); backdrop-filter:blur(16px); color:#7060a0; text-decoration:none; transition:all 0.2s ease; }
   .social-icon:hover { background:rgba(200,170,220,0.25); transform:translateY(-3px); box-shadow:0 6px 20px rgba(160,130,200,0.2); color:#5040a0; }
   .social-icon svg { width:18px; height:18px; }
@@ -182,22 +235,38 @@ tailwind.config = {
 <body>
 
 <div id="cursor-glow"></div>
-
 <div class="mesh-bg">
   <div class="orb orb-1"></div><div class="orb orb-2"></div>
   <div class="orb orb-3"></div><div class="orb orb-4"></div><div class="orb orb-5"></div>
 </div>
 
+<!-- ── MOBILE MENU ── -->
+<div class="mobile-menu" id="mobile-menu">
+  <a href="#about" onclick="closeMenu()">Chi sono</a>
+  <a href="#services" onclick="closeMenu()">Servizi</a>
+  <a href="#projects" onclick="closeMenu()">Progetti</a>
+  <a href="#contact" onclick="closeMenu()">Contatti</a>
+</div>
+
 <!-- ── NAVBAR ── -->
-<nav class="glass flex items-center justify-between">
-  <span class="display text-lg font-light tracking-wide" style="color:#3a2850">Sofia<em style="font-style:italic;color:#b080c8">.</em></span>
-  <ul class="hidden md:flex items-center gap-8 text-sm" style="color:#7a6d85; font-family:'DM Sans',sans-serif;">
+<nav class="glass flex items-center justify-between" id="main-nav">
+  <!-- Logo -->
+  <a href="#" class="nav-logo">
+    <div class="nav-logo-badge">A</div>
+  </a>
+
+  <!-- Desktop links -->
+  <ul class="desktop-links hidden md:flex items-center gap-8 text-sm" style="color:#7a6d85; font-family:'DM Sans',sans-serif;">
     <li><a href="#about" class="hover:text-purple-600 transition-colors">Chi sono</a></li>
     <li><a href="#services" class="hover:text-purple-600 transition-colors">Servizi</a></li>
     <li><a href="#projects" class="hover:text-purple-600 transition-colors">Progetti</a></li>
     <li><a href="#contact" class="hover:text-purple-600 transition-colors">Contatti</a></li>
   </ul>
-  <a href="#contact" class="btn-aura text-sm py-2 px-5 hidden md:inline-flex">Lavoriamo insieme →</a>
+
+  <!-- Hamburger (mobile only) -->
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
 
 <!-- ── THEME TOGGLE ── -->
@@ -398,32 +467,23 @@ tailwind.config = {
 <!-- ── FOOTER ── -->
 <footer class="relative z-10">
   <div class="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
-
     <span style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.1em;">© 2026 Tutti i diritti riservati · Made with ♥</span>
-
     <div class="flex items-center gap-3">
       <a href="https://www.linkedin.com/in/ashley-victoria-d-151601396" target="_blank" class="social-icon" title="LinkedIn">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-        </svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
       </a>
       <a href="https://github.com/ashleyds03" target="_blank" class="social-icon" title="GitHub">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
-        </svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
       </a>
       <a href="mailto:ashleydalsoglio@gmail.com" class="social-icon" title="Email">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-          <rect x="2" y="4" width="20" height="16" rx="3"/>
-          <polyline points="2,4 12,13 22,4"/>
-        </svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="3"/><polyline points="2,4 12,13 22,4"/></svg>
       </a>
     </div>
-
   </div>
 </footer>
 
 <script>
+  // ── THEME ──
   (function(){
     var h = document.documentElement;
     h.setAttribute('data-theme', localStorage.getItem('sofia-theme') || 'light');
@@ -431,27 +491,66 @@ tailwind.config = {
 
   window.addEventListener('DOMContentLoaded', function(){
     var html = document.documentElement;
+
+    // Theme toggle
     document.getElementById('theme-toggle').addEventListener('click', function(){
       var next = html.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
       html.setAttribute('data-theme', next);
       localStorage.setItem('sofia-theme', next);
     });
 
+    // ── NAV HIDE ON SCROLL ──
+    var nav = document.getElementById('main-nav');
+    var lastScroll = 0;
+    var scrollThreshold = 80; // px before hiding starts
+
+    window.addEventListener('scroll', function(){
+      var current = window.scrollY;
+      if (current > scrollThreshold && current > lastScroll) {
+        nav.classList.add('hidden-nav');
+      } else {
+        nav.classList.remove('hidden-nav');
+      }
+      lastScroll = current;
+    }, { passive: true });
+
+    // ── HAMBURGER MENU ──
+    var hamburger = document.getElementById('hamburger');
+    var mobileMenu = document.getElementById('mobile-menu');
+
+    hamburger.addEventListener('click', function(){
+      var isOpen = mobileMenu.classList.contains('open');
+      if (isOpen) {
+        closeMenu();
+      } else {
+        mobileMenu.classList.add('open');
+        hamburger.classList.add('open');
+      }
+    });
+
+    // Cursor glow
     var glow = document.getElementById('cursor-glow');
     document.addEventListener('mousemove', function(e){
       glow.style.left = e.clientX + 'px';
       glow.style.top  = e.clientY + 'px';
     });
 
+    // Scroll fade-up
     var obs = new IntersectionObserver(function(entries){
       entries.forEach(function(e){ if(e.isIntersecting) e.target.classList.add('visible'); });
     }, { threshold: 0.12 });
     document.querySelectorAll('.fade-up').forEach(function(el){ obs.observe(el); });
 
+    // Stagger cards
     document.querySelectorAll('.glass-card').forEach(function(c,i){
       c.style.transitionDelay = (i * 0.05) + 's';
     });
   });
+
+  function closeMenu(){
+    document.getElementById('mobile-menu').classList.remove('open');
+    document.getElementById('hamburger').classList.remove('open');
+  }
 </script>
 </body>
 </html>
