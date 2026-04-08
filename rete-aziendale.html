@@ -517,23 +517,7 @@ interface Serial2/0
       <p class="text-sm mb-4 leading-relaxed" style="color:var(--muted);font-weight:300;">
         In sostituzione del firewall ASA, la sicurezza perimetrale è implementata tramite ACL estese sulle interfacce WAN. L'ACL permette solo traffico autorizzato in ingresso.
       </p>
-      <div class="flex flex-col gap-2">
-        <div class="flex items-center gap-3 text-sm" style="color:var(--muted);">
-          <span class="result-badge result-ok">UDP 520</span> Traffico RIP v2
-        </div>
-        <div class="flex items-center gap-3 text-sm" style="color:var(--muted);">
-          <span class="result-badge result-ok">UDP 53</span> Query DNS
-        </div>
-        <div class="flex items-center gap-3 text-sm" style="color:var(--muted);">
-          <span class="result-badge result-ok">ICMP</span> Ping diagnostico
-        </div>
-        <div class="flex items-center gap-3 text-sm" style="color:var(--muted);">
-          <span class="result-badge result-ok">TCP 80</span> Traffico HTTP
-        </div>
-        <div class="flex items-center gap-3 text-sm" style="color:var(--muted);">
-          <span class="result-badge result-ok">TCP 443</span> Traffico HTTPS
-        </div>
-        <div class="flex items-center gap-3 text-sm" style="color:var(--muted);">
+    
           <span style="padding:4px 12px;border-radius:100px;font-family:'Space Mono',monospace;font-size:10px;background:rgba(220,100,100,0.12);border:1px solid rgba(180,80,80,0.3);color:#a04040;">DENY ALL</span> Tutto il resto bloccato
         </div>
       </div>
@@ -584,74 +568,52 @@ interface FastEthernet1/0
 
 <div class="aura-divider max-w-5xl mx-auto mb-16" style="width:calc(100% - 48px);"></div>
 
-<!-- SEZIONE 8: TEST -->
-<section class="max-w-5xl mx-auto px-6 mb-16 relative z-10 fade-up">
-  <div class="section-label">08 · Test di connettività</div>
-  <h2 class="display text-4xl font-light mb-4" style="color:#2a1840">Verifica risultati</h2>
-  <p class="text-sm mb-8 max-w-2xl" style="color:var(--muted);font-weight:300;">
-    Test eseguiti dalla workstation HQ-U1 (192.168.10.10, assegnata via DHCP). La perdita del primo pacchetto verso le filiali è normale in Packet Tracer per la convergenza iniziale di RIP v2.
-  </p>
 
-  <div class="glass-card rounded-3xl overflow-hidden">
-    <table class="data-table">
-      <thead><tr><th>Destinazione</th><th>IP</th><th>Risultato</th><th>Note</th></tr></thead>
-      <tbody>
-        <tr>
-          <td>Server DHCP (DC)</td>
-          <td>192.168.5.2</td>
-          <td><span class="result-badge result-ok">4/4 ✓</span></td>
-          <td style="color:var(--muted);">10ms avg</td>
-        </tr>
-        <tr>
-          <td>PC Uffici Roma</td>
-          <td>192.168.11.10</td>
-          <td><span class="result-badge result-ok">3/4 ✓</span></td>
-          <td style="color:var(--muted);">1° pkt perso per convergenza RIP</td>
-        </tr>
-        <tr>
-          <td>PC Uffici Napoli</td>
-          <td>192.168.12.10</td>
-          <td><span class="result-badge result-ok">3/4 ✓</span></td>
-          <td style="color:var(--muted);">1° pkt perso per convergenza RIP</td>
-        </tr>
-      </tbody>
-    </table>
+
+<section class="max-w-5xl mx-auto px-6 mb-16 relative z-10 fade-up">
+  <div class="section-label">08 · File di Progetto</div>
+  <div class="glass-card rounded-3xl p-8 text-center" style="background: rgba(232, 180, 200, 0.1);">
+    <h2 class="display text-3xl font-light mb-4" style="color:#2a1840">Scarica la <em style="font-style:italic;color:#b080c8">Simulazione</em></h2>
+    <p class="text-sm mb-8 max-w-xl mx-auto" style="color:var(--muted);font-weight:300;">
+      Scarica il file sorgente .PKT per esplorare la topologia completa e verificare le configurazioni direttamente su Cisco Packet Tracer.
+    </p>
+    
+    <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+      <a href="assets/progetto_rete_aziendale.pkt" download class="btn-aura">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+        Download Progetto .PKT
+      </a>
+    </div>
   </div>
 </section>
 
 <div class="aura-divider max-w-5xl mx-auto mb-16" style="width:calc(100% - 48px);"></div>
 
-<!-- SEZIONE 9: CONCLUSIONI -->
 <section class="max-w-5xl mx-auto px-6 mb-32 relative z-10 fade-up">
   <div class="section-label">09 · Conclusioni</div>
   <h2 class="display text-4xl font-light mb-6" style="color:#2a1840">Risultati <em style="font-style:italic;color:#b080c8">ottenuti</em></h2>
 
-  <div class="grid md:grid-cols-2 gap-4 mb-8">
+  <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
     <div class="section-card">
       <div class="text-lg mb-2">🔒</div>
-      <h4 class="font-medium mb-2" style="color:var(--text);">Sicurezza</h4>
-      <p class="text-sm" style="color:var(--muted);font-weight:300;">Separazione traffico tramite VLAN, ACL firewall su tutte le interfacce WAN, DMZ fisica per il server Web.</p>
+      <h4 class="font-medium mb-1 text-xs uppercase tracking-wider" style="color:var(--text);">Sicurezza</h4>
+      <p class="text-xs" style="color:var(--muted);font-weight:300;">VLAN, ACL e DMZ fisica per l'isolamento dei dati sensibili.</p>
     </div>
     <div class="section-card">
       <div class="text-lg mb-2">📈</div>
-      <h4 class="font-medium mb-2" style="color:var(--text);">Scalabilità</h4>
-      <p class="text-sm" style="color:var(--muted);font-weight:300;">RIP v2 propaga automaticamente le nuove rotte senza intervento manuale.</p>
+      <h4 class="font-medium mb-1 text-xs uppercase tracking-wider" style="color:var(--text);">Scalabilità</h4>
+      <p class="text-xs" style="color:var(--muted);font-weight:300;">Il protocollo RIP v2 permette l'aggiunta di nuove sedi in tempo reale.</p>
     </div>
     <div class="section-card">
       <div class="text-lg mb-2">🎯</div>
-      <h4 class="font-medium mb-2" style="color:var(--text);">Centralizzazione</h4>
-      <p class="text-sm" style="color:var(--muted);font-weight:300;">Un unico server DHCP e DNS serve tutte le sedi tramite ip helper-address.</p>
+      <h4 class="font-medium mb-1 text-xs uppercase tracking-wider" style="color:var(--text);">Standard</h4>
+      <p class="text-xs" style="color:var(--muted);font-weight:300;">DHCP e DNS centralizzati per una gestione semplificata della rete.</p>
     </div>
     <div class="section-card">
       <div class="text-lg mb-2">🔄</div>
-      <h4 class="font-medium mb-2" style="color:var(--text);">Alta disponibilità</h4>
-      <p class="text-sm" style="color:var(--muted);font-weight:300;">Il Data Center è raggiungibile da ogni sede tramite percorsi ridondanti via HQ e direttamente.</p>
+      <h4 class="font-medium mb-1 text-xs uppercase tracking-wider" style="color:var(--text);">Affidabilità</h4>
+      <p class="text-xs" style="color:var(--muted);font-weight:300;">Link ridondanti tra Filiali e Data Center contro i guasti.</p>
     </div>
-  </div>
-
-  <div class="glass-card rounded-3xl p-8 text-center">
-    <p class="display text-2xl font-light mb-6" style="color:#4a2860;">Tutti i test di connettività hanno dato esito <em style="font-style:italic;color:#b080c8;">positivo</em></p>
-    <a href="index.html" class="btn-aura">← Torna al portfolio</a>
   </div>
 </section>
 
