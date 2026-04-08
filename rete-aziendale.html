@@ -168,7 +168,6 @@ tailwind.config = {
   <div class="flex items-center justify-between">
     <a href="index.html" class="nav-logo">
       <div class="nav-logo-badge">A</div>
-      <span class="display text-base font-light ml-1" style="color:#4a2860">Ashley</span>
     </a>
     <div class="flex items-center gap-6">
       <a href="index.html" class="back-btn">← Torna al portfolio</a>
@@ -182,46 +181,15 @@ tailwind.config = {
     <a href="index.html" class="back-btn mb-8 inline-flex">← Tutti i progetti</a>
     <div class="project-hero-badge" style="margin-top:20px;">01 · Progetto ITS · Reti e Sistemi</div>
     <h1 class="project-title mb-6">
-      Rete Aziendale<br><em>Distribuita</em>
+      Progetto di  <br><em>Networking</em>
     </h1>
     <p class="text-lg mb-8 max-w-2xl" style="color:var(--muted);font-weight:300;line-height:1.7;">
-      Progettazione e simulazione di un'infrastruttura di rete enterprise multi-sede con VLAN, routing dinamico RIP v2, DMZ fisica e sicurezza perimetrale tramite ACL.
+      Progettazione e simulazione di un'infrastruttura di rete aziendale multi-sede con VLAN, routing dinamico RIP, DMZ fisica e Firewall tramite ACL .
     </p>
-    <div class="flex flex-wrap gap-2">
-      <span class="tag">Cisco Packet Tracer</span>
-      <span class="tag">VLAN</span>
-      <span class="tag">RIP v2</span>
-      <span class="tag">DHCP / DNS</span>
-      <span class="tag">VPN IPsec</span>
-      <span class="tag">ACL Firewall</span>
-      <span class="tag">DMZ</span>
-    </div>
+
   </div>
 </section>
 
-<!-- STATS -->
-<section class="max-w-5xl mx-auto px-6 mb-20 relative z-10 fade-up">
-  <div class="glass-card rounded-3xl overflow-hidden">
-    <div class="grid grid-cols-2 md:grid-cols-4 divide-x divide-y md:divide-y-0" style="border-color:rgba(200,175,220,0.2);">
-      <div class="stat-box">
-        <div class="stat-num">4</div>
-        <div class="stat-label">Sedi collegate</div>
-      </div>
-      <div class="stat-box">
-        <div class="stat-num">12</div>
-        <div class="stat-label">VLAN configurate</div>
-      </div>
-      <div class="stat-box">
-        <div class="stat-num">5</div>
-        <div class="stat-label">Link WAN seriali</div>
-      </div>
-      <div class="stat-box">
-        <div class="stat-num">9</div>
-        <div class="stat-label">Pool DHCP gestiti</div>
-      </div>
-    </div>
-  </div>
-</section>
 
 <!-- SEZIONE 1: INTRO -->
 <section class="max-w-5xl mx-auto px-6 mb-16 relative z-10 fade-up">
@@ -255,16 +223,6 @@ tailwind.config = {
         </li>
       </ul>
     </div>
-    <div class="section-card flex flex-col gap-4">
-      <div class="section-label">Tecnologie</div>
-      <div class="flex flex-col gap-2">
-        <div class="tech-pill"><div class="tech-pill-icon">🔵</div>Cisco Packet Tracer</div>
-        <div class="tech-pill"><div class="tech-pill-icon">🔀</div>Router-PT + NM-1S</div>
-        <div class="tech-pill"><div class="tech-pill-icon">🔌</div>Switch 2960-24TT</div>
-        <div class="tech-pill"><div class="tech-pill-icon">🛡️</div>ACL Estese</div>
-        <div class="tech-pill"><div class="tech-pill-icon">🔒</div>VPN IPsec (doc.)</div>
-      </div>
-    </div>
   </div>
 </section>
 
@@ -289,10 +247,10 @@ tailwind.config = {
           </tr>
         </thead>
         <tbody>
-          <tr><td>🏢 HQ Milano</td><td>1× Router-PT</td><td>1× 2960-24TT</td><td>9× PC</td><td>1×</td></tr>
-          <tr><td>🏢 Filiale Roma</td><td>1× Router-PT</td><td>1× 2960-24TT</td><td>7× PC</td><td>1×</td></tr>
-          <tr><td>🏢 Filiale Napoli</td><td>1× Router-PT</td><td>1× 2960-24TT</td><td>7× PC</td><td>1×</td></tr>
-          <tr><td>🖥️ Data Center</td><td>1× Router-PT</td><td>1× 2960-24TT</td><td>4× Server + 1× Web (DMZ)</td><td>—</td></tr>
+          <tr><td>HQ Milano</td><td>1× Router-PT</td><td>1× 2960-24TT</td><td>9× PC</td><td>1×</td></tr>
+          <tr><td>Filiale Roma</td><td>1× Router-PT</td><td>1× 2960-24TT</td><td>7× PC</td><td>1×</td></tr>
+          <tr><td>Filiale Napoli</td><td>1× Router-PT</td><td>1× 2960-24TT</td><td>7× PC</td><td>1×</td></tr>
+          <tr><td>Data Center</td><td>1× Router-PT</td><td>1× 2960-24TT</td><td>4× Server + 1× Web (DMZ)</td><td>—</td></tr>
         </tbody>
       </table>
     </div>
@@ -350,7 +308,7 @@ tailwind.config = {
   <div class="section-label">03 · VLAN</div>
   <h2 class="display text-4xl font-light mb-4" style="color:#2a1840">Configurazione VLAN</h2>
   <p class="text-sm mb-8 max-w-2xl" style="color:var(--muted);font-weight:300;">
-    Ogni sede usa tre VLAN per separare logicamente il traffico. Il routing inter-VLAN è gestito dai router con la tecnica <em>router-on-a-stick</em> tramite subinterface dot1Q.
+    Ogni sede usa tre VLAN per separare logicamente il traffico. 
   </p>
 
   <div class="grid md:grid-cols-2 gap-6 mb-8">
@@ -416,14 +374,14 @@ write memory</div>
 <!-- SEZIONE 4: RIP v2 -->
 <section class="max-w-5xl mx-auto px-6 mb-16 relative z-10 fade-up">
   <div class="section-label">04 · Routing dinamico</div>
-  <h2 class="display text-4xl font-light mb-4" style="color:#2a1840">RIP versione 2</h2>
+  <h2 class="display text-4xl font-light mb-4" style="color:#2a1840">RIP </h2>
   <p class="text-sm mb-6 max-w-2xl" style="color:var(--muted);font-weight:300;">
-    RIP v2 propaga dinamicamente le rotte tra tutti i router della rete. La configurazione usa <code style="font-family:'Space Mono',monospace;font-size:11px;">no auto-summary</code> per supportare VLSM e subnet mask classless.
+    RIP propaga dinamicamente le rotte tra tutti i router della rete.
   </p>
 
   <div class="grid md:grid-cols-2 gap-6 mb-6">
     <div>
-      <div class="section-label mb-3">Configurazione RIP v2 · Router HQ</div>
+      <div class="section-label mb-3">Configurazione RIP · Router HQ</div>
       <div class="code-block">router rip
  version 2
  no auto-summary
@@ -436,6 +394,9 @@ write memory</div>
     </div>
     <div>
       <div class="section-label mb-3">Output show ip route · Router HQ</div>
+      <p class="text-sm mb-6 max-w-2xl" style="color:var(--muted);font-weight:300;">
+    La verifica della tabella di routing conferma che RIP ha propagato correttamente tutte le rotte tra le sedi:
+  </p>
       <div class="code-block">R  192.168.5.0/24 [120/1] via 200.30.30.2
 C  192.168.10.0/24 directly connected
 R  192.168.11.0/24 [120/1] via 200.10.10.2
@@ -445,19 +406,6 @@ R  192.168.31.0/24 [120/1] via 200.10.10.2
 R  200.40.40.0 [120/1] via 200.10.10.2
                via 200.30.30.2</div>
     </div>
-  </div>
-
-  <div class="section-card">
-    <div class="flex flex-wrap gap-4">
-      <div class="flex items-center gap-2 text-sm" style="color:var(--muted);">
-        <span style="color:#c080b0;">✦</span> Supporto VLSM con subnet mask classless
-      </div>
-      <div class="flex items-center gap-2 text-sm" style="color:var(--muted);">
-        <span style="color:#a080d0;">✦</span> no auto-summary per evitare summarizzazione automatica
-      </div>
-      <div class="flex items-center gap-2 text-sm" style="color:var(--muted);">
-        <span style="color:#80a8e8;">✦</span> Convergenza verificata su ogni router
-      </div>
     </div>
   </div>
 </section>
@@ -466,10 +414,10 @@ R  200.40.40.0 [120/1] via 200.10.10.2
 
 <!-- SEZIONE 5: DHCP / DNS -->
 <section class="max-w-5xl mx-auto px-6 mb-16 relative z-10 fade-up">
-  <div class="section-label">05 · Servizi centralizzati</div>
-  <h2 class="display text-4xl font-light mb-4" style="color:#2a1840">DHCP &amp; DNS</h2>
+  <div class="section-label">05 · DHCP </div>
+  <h2 class="display text-4xl font-light mb-4" style="color:#2a1840">DHCP centralizzato nel Data Center</h2>
   <p class="text-sm mb-8 max-w-2xl" style="color:var(--muted);font-weight:300;">
-    Il server DHCP (192.168.5.2) e il server DNS (192.168.5.3) risiedono nel Data Center e servono tutte le sedi tramite <code style="font-family:'Space Mono',monospace;font-size:11px;">ip helper-address</code> configurato su ogni subinterface.
+    Il server DHCP (192.168.5.2) gestisce l'assegnazione automatica degli indirizzi IP per tutte le VLAN di tutte le sedi. I router fungono da relay agent tramite il comando ip helper-address 192.168.5.2 configurato su ogni subinterface. <code style="font-family:'Space Mono',monospace;font-size:11px;">ip helper-address</code> configurato su ogni subinterface.
   </p>
 
   <div class="grid md:grid-cols-2 gap-6">
@@ -498,13 +446,13 @@ R  200.40.40.0 [120/1] via 200.10.10.2
       <h3 class="display text-2xl font-light mb-4" style="color:#2a1840">Record DNS interni</h3>
       <div class="glass-card rounded-3xl overflow-hidden">
         <table class="data-table">
-          <thead><tr><th>Nome host</th><th>Tipo</th><th>IP</th></tr></thead>
+          <thead><tr><th>Nome host</th><th>IP</th></tr></thead>
           <tbody>
-            <tr><td>server.azienda.local</td><td>A</td><td>192.168.5.2</td></tr>
-            <tr><td>dns.azienda.local</td><td>A</td><td>192.168.5.3</td></tr>
-            <tr><td>db.azienda.local</td><td>A</td><td>192.168.5.4</td></tr>
-            <tr><td>files.azienda.local</td><td>A</td><td>192.168.5.5</td></tr>
-            <tr><td>www.azienda.local</td><td>A</td><td>192.168.100.10</td></tr>
+            <tr><td>server.azienda.local</td><td>192.168.5.2</td></tr>
+            <tr><td>dns.azienda.local</td><td>192.168.5.3</td></tr>
+            <tr><td>db.azienda.local</td><td>192.168.5.4</td></tr>
+            <tr><td>files.azienda.local</td><td>192.168.5.5</td></tr>
+            <tr><td>www.azienda.local</td><td>192.168.100.10</td></tr>
           </tbody>
         </table>
       </div>
@@ -517,56 +465,44 @@ R  200.40.40.0 [120/1] via 200.10.10.2
 <!-- SEZIONE 6: VPN -->
 <section class="max-w-5xl mx-auto px-6 mb-16 relative z-10 fade-up">
   <div class="section-label">06 · VPN site-to-site</div>
-  <h2 class="display text-4xl font-light mb-4" style="color:#2a1840">IPsec <em style="font-style:italic;color:#b080c8">documentata</em></h2>
+  <h2 class="display text-4xl font-light mb-4" style="color:#2a1840">VPN IPsec <em style="font-style:italic;color:#b080c8">documentata</em></h2>
   <p class="text-sm mb-6 max-w-2xl" style="color:var(--muted);font-weight:300;">
-    La VPN site-to-site è documentata a livello progettuale. Il Router-PT in Packet Tracer non supporta IPsec tramite CLI, ma la configurazione è pronta per hardware reale Cisco 2811+.
+    La VPN Site-to-Site garantisce la riservatezza dei dati tra HQ Milano e Filiale Roma tramite cifratura IPsec[cite: 98, 99]. 
+    A causa delle limitazioni del modulo Router-PT in Packet Tracer, la configurazione è fornita come specifica progettuale per hardware reale Cisco (es. serie 2811/2900).
   </p>
 
-  <div class="grid md:grid-cols-3 gap-4 mb-6">
-    <div class="section-card text-center">
-      <div class="text-2xl mb-2">🔐</div>
-      <div class="mono text-xs mb-1" style="color:var(--muted);">IKE Phase 1</div>
-      <div class="text-sm font-medium" style="color:var(--text);">AES 256 + SHA</div>
-      <div class="text-xs mt-1" style="color:var(--muted);">DH group 2 · 86400s</div>
-    </div>
-    <div class="section-card text-center">
-      <div class="text-2xl mb-2">🛡️</div>
-      <div class="mono text-xs mb-1" style="color:var(--muted);">IKE Phase 2</div>
-      <div class="text-sm font-medium" style="color:var(--text);">ESP + AES 128</div>
-      <div class="text-xs mt-1" style="color:var(--muted);">SHA-HMAC · tunnel mode</div>
-    </div>
-    <div class="section-card text-center">
-      <div class="text-2xl mb-2">🔑</div>
-      <div class="mono text-xs mb-1" style="color:var(--muted);">Autenticazione</div>
-      <div class="text-sm font-medium" style="color:var(--text);">Pre-shared key</div>
-      <div class="text-xs mt-1" style="color:var(--muted);">Per ogni coppia di sedi</div>
-    </div>
-  </div>
-
-  <div class="section-label mb-3">Configurazione VPN · HQ → Roma (su hardware reale)</div>
-  <div class="code-block">crypto isakmp policy 10
+  <div class="section-label mb-3">Implementazione Logica · HQ Milano → Roma</div>
+  <div class="code-block">
+! --- FASE 1: ISAKMP (Management Tunnel) ---
+crypto isakmp policy 10
  encryption aes 256
  hash sha
  authentication pre-share
  group 2
  lifetime 86400
-crypto isakmp key CHIAVE_SEGRETA address 200.10.10.2
+exit
+crypto isakmp key myvpnkey address 200.10.10.2
 
-crypto ipsec transform-set VPN-TRANSFORM esp-aes 128 esp-sha-hmac
+! --- FASE 2: IPsec (Data Tunnel) ---
+crypto ipsec transform-set TS esp-aes 128 esp-sha-hmac
  mode tunnel
 
-ip access-list extended VPN-HQ-ROMA
+! --- Selezione Traffico da Cifrare (Inter-LAN) ---
+ip access-list extended VPN-TRAFFIC
  permit ip 192.168.10.0 0.0.0.255 192.168.11.0 0.0.0.255
  permit ip 192.168.20.0 0.0.0.255 192.168.21.0 0.0.0.255
  permit ip 192.168.30.0 0.0.0.255 192.168.31.0 0.0.0.255
 
-crypto map VPN-MAP 10 ipsec-isakmp
+! --- Associazione e Attivazione ---
+crypto map VPNMAP 10 ipsec-isakmp
  set peer 200.10.10.2
- set transform-set VPN-TRANSFORM
- match address VPN-HQ-ROMA
+ set transform-set TS
+ match address VPN-TRAFFIC
+exit
 
 interface Serial2/0
- crypto map VPN-MAP</div>
+ crypto map VPNMAP
+  </div>
 </section>
 
 <div class="aura-divider max-w-5xl mx-auto mb-16" style="width:calc(100% - 48px);"></div>
