@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="it" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rete Aziendale Distribuita · Ashley</title>
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&family=Space+Mono:wght@400&display=swap" rel="stylesheet">
+
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        aura1: '#e8b4c8', aura2: '#c4a8e0', aura3: '#a8b8f0', aura4: '#f0c4a8', aura5: '#f8d0e0',
+      },
+      fontFamily: {
+        serif: ['Cormorant Garamond', 'serif'],
+        sans: ['DM Sans', 'sans-serif'],
+        mono: ['Space Mono', 'monospace'],
+      }
+    }
+  }
+}
+</script>
+
+<style>
+  :root {
+    --bg: #faf9fc; --surface: rgba(255,255,255,0.55); --border: rgba(200,180,220,0.3);
+    --text: #1a1520; --muted: #7a6d85; --accent1: #d4a0c0; --accent2: #9b8fd4; --accent3: #7ab0e8;
+  }
+  [data-theme="dark"] {
+    --bg: #0e0b14; --surface: rgba(30,22,45,0.7); --border: rgba(120,90,160,0.3);
+    --text: #f0eaf8; --muted: #9d8fb8; --accent1: #c47faa; --accent2: #8a7ec8; --accent3: #6090d0;
+  }
+  [data-theme="dark"] body { background: var(--bg); color: var(--text); }
+  [data-theme="dark"] .orb-1 { background: radial-gradient(circle, #8a3060, #601848); opacity: 0.35; }
+  [data-theme="dark"] .orb-2 { background: radial-gradient(circle, #5040a0, #382888); opacity: 0.35; }
+  [data-theme="dark"] .orb-3 { background: radial-gradient(circle, #2040a0, #182878); opacity: 0.3; }
+  [data-theme="dark"] .orb-4 { background: radial-gradient(circle, #703020, #502010); opacity: 0.25; }
+  [data-theme="dark"] .orb-5 { background: radial-gradient(circle, #802848, #601030); opacity: 0.3; }
+  [data-theme="dark"] .glass { background: rgba(20,14,32,0.55); border: 1px solid rgba(120,90,160,0.3); box-shadow: 0 8px 32px rgba(80,50,120,0.25), inset 0 1px 0 rgba(255,255,255,0.06); }
+  [data-theme="dark"] .glass-dark { background: rgba(20,14,32,0.4); border: 1px solid rgba(120,90,160,0.25); }
+  [data-theme="dark"] .glass-card { background: rgba(22,15,36,0.6); border: 1px solid rgba(120,90,160,0.25); box-shadow: 0 16px 48px rgba(60,30,100,0.3), inset 0 1px 0 rgba(255,255,255,0.06); }
+  [data-theme="dark"] .tag { background: rgba(30,18,50,0.6); border-color: rgba(140,100,180,0.35); color: #b090d8; }
+  [data-theme="dark"] nav span[class*="display"] { color: #e0d0f8 !important; }
+  [data-theme="dark"] h2, [data-theme="dark"] h3, [data-theme="dark"] h4 { color: #e8d8f8 !important; }
+  [data-theme="dark"] .aura-divider { background: linear-gradient(90deg, transparent, rgba(130,90,180,0.4), transparent); }
+  [data-theme="dark"] #cursor-glow { background: radial-gradient(circle, rgba(150,100,200,0.14), transparent 70%); }
+  [data-theme="dark"] .social-icon { background: rgba(30,18,50,0.7); border-color: rgba(120,90,160,0.4); color: #b090d8; }
+  [data-theme="dark"] #theme-toggle { background: rgba(18,10,30,0.55); border-color: rgba(130,95,170,0.4); }
+  [data-theme="dark"] footer { background: rgba(5,3,10,0.6); border-top-color: rgba(120,90,160,0.3); }
+  [data-theme="dark"] .code-block { background: rgba(10,6,20,0.8); border-color: rgba(120,90,160,0.3); }
+  [data-theme="dark"] .data-table th { background: rgba(40,25,65,0.6); color: #c8b0e8; }
+  [data-theme="dark"] .data-table td { border-color: rgba(100,75,140,0.2); }
+  [data-theme="dark"] .data-table tr:hover td { background: rgba(60,40,90,0.3); }
+  [data-theme="dark"] .section-card { background: rgba(20,14,32,0.5); border-color: rgba(120,90,160,0.2); }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; overflow-x: hidden; }
+
+  .mesh-bg { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+  .orb { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.45; animation: drift 18s ease-in-out infinite alternate; }
+  .orb-1 { width: 600px; height: 600px; background: radial-gradient(circle, #f5c2d8, #e8a0c0); top: -150px; left: -100px; animation-duration: 20s; }
+  .orb-2 { width: 500px; height: 500px; background: radial-gradient(circle, #c8b8f0, #a090d8); top: 30%; right: -150px; animation-duration: 25s; animation-delay: -5s; }
+  .orb-3 { width: 450px; height: 450px; background: radial-gradient(circle, #a8c8f8, #88a8e8); bottom: -100px; left: 20%; animation-duration: 22s; animation-delay: -10s; }
+  .orb-4 { width: 300px; height: 300px; background: radial-gradient(circle, #fce0b0, #f8c090); top: 60%; left: -50px; animation-duration: 17s; animation-delay: -3s; }
+  .orb-5 { width: 250px; height: 250px; background: radial-gradient(circle, #f0b8d8, #d898c0); top: 15%; left: 40%; animation-duration: 19s; animation-delay: -8s; }
+  @keyframes drift { 0%{transform:translate(0,0) scale(1)} 33%{transform:translate(30px,-40px) scale(1.05)} 66%{transform:translate(-20px,20px) scale(0.97)} 100%{transform:translate(15px,-15px) scale(1.03)} }
+
+  body::after { content:''; position:fixed; inset:0; background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E"); background-size:200px; pointer-events:none; z-index:1; opacity:0.6; }
+
+  .glass { background:rgba(255,255,255,0.45); backdrop-filter:blur(24px) saturate(180%); -webkit-backdrop-filter:blur(24px) saturate(180%); border:1px solid rgba(255,255,255,0.6); box-shadow:0 8px 32px rgba(180,140,200,0.12),inset 0 1px 0 rgba(255,255,255,0.8); }
+  .glass-card { background:rgba(255,255,255,0.5); backdrop-filter:blur(30px) saturate(200%); -webkit-backdrop-filter:blur(30px) saturate(200%); border:1px solid rgba(255,255,255,0.7); box-shadow:0 16px 48px rgba(160,130,190,0.15),inset 0 1px 0 rgba(255,255,255,0.9); }
+
+  nav { position:fixed; top:20px; left:50%; transform:translateX(-50%); z-index:100; width:calc(100% - 48px); max-width:960px; border-radius:100px; padding:14px 32px; transition:opacity 0.4s ease,transform 0.4s ease; }
+  nav.hidden-nav { opacity:0; transform:translateX(-50%) translateY(-20px); pointer-events:none; }
+  @media(max-width:640px){ nav { width:calc(100% - 32px); padding:12px 20px; border-radius:20px; } }
+
+  .nav-logo { display:flex; align-items:center; gap:6px; text-decoration:none; flex-shrink:0; }
+  .nav-logo-badge { width:36px; height:36px; border-radius:12px; background:linear-gradient(135deg,rgba(200,160,225,0.6),rgba(160,180,240,0.6)); border:1px solid rgba(255,255,255,0.7); display:flex; align-items:center; justify-content:center; font-family:'Cormorant Garamond',serif; font-size:18px; color:#4a2860; position:relative; }
+  .nav-logo-badge::before { content:'✦'; position:absolute; top:-5px; right:-5px; font-size:8px; color:#b080c8; animation:twinkle 2s ease-in-out infinite; }
+  .nav-logo-badge::after { content:'✦'; position:absolute; bottom:-4px; left:-4px; font-size:6px; color:#90a8e0; animation:twinkle 2.5s ease-in-out infinite 0.8s; }
+  @keyframes twinkle { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.3;transform:scale(0.7)} }
+  [data-theme="dark"] .nav-logo-badge { color:#d0b0f0; background:linear-gradient(135deg,rgba(100,70,150,0.6),rgba(70,90,160,0.6)); }
+
+  .display { font-family:'Cormorant Garamond',serif; }
+  .mono    { font-family:'Space Mono',monospace; }
+
+  .tag { display:inline-flex; align-items:center; gap:6px; border-radius:100px; padding:6px 14px; font-size:12px; font-family:'Space Mono',monospace; letter-spacing:0.03em; background:rgba(255,255,255,0.6); border:1px solid rgba(200,170,220,0.35); color:#7060a0; backdrop-filter:blur(10px); }
+
+  .btn-aura { display:inline-flex; align-items:center; gap:10px; background:linear-gradient(135deg,rgba(200,160,225,0.7),rgba(160,180,240,0.7)); backdrop-filter:blur(20px); border:1px solid rgba(255,255,255,0.7); border-radius:100px; padding:14px 32px; font-size:14px; font-family:'DM Sans',sans-serif; font-weight:500; color:#2a1840; text-decoration:none; box-shadow:0 8px 32px rgba(180,140,210,0.3),inset 0 1px 0 rgba(255,255,255,0.8); transition:all 0.3s ease; cursor:pointer; }
+  .btn-aura:hover { transform:translateY(-2px); box-shadow:0 12px 40px rgba(180,140,210,0.4); }
+  .btn-outline-aura { display:inline-flex; align-items:center; gap:10px; background:rgba(255,255,255,0.3); backdrop-filter:blur(16px); border:1px solid rgba(200,170,220,0.5); border-radius:100px; padding:13px 28px; font-size:14px; font-family:'DM Sans',sans-serif; color:#5040a0; text-decoration:none; transition:all 0.3s ease; }
+  .btn-outline-aura:hover { background:rgba(200,170,220,0.2); transform:translateY(-2px); }
+
+  .section-label { font-family:'Space Mono',monospace; font-size:10px; letter-spacing:0.2em; text-transform:uppercase; color:var(--muted); margin-bottom:12px; }
+
+  .aura-divider { height:1px; background:linear-gradient(90deg,transparent,rgba(200,170,220,0.4),transparent); margin:0 auto; }
+
+  footer { position:relative; z-index:2; background:rgba(20,14,32,0.07); backdrop-filter:blur(24px); border-top:1px solid rgba(180,150,210,0.25); padding:40px 32px; font-size:13px; color:var(--muted); }
+  .social-icon { width:40px; height:40px; border-radius:10px; display:flex; align-items:center; justify-content:center; background:rgba(255,255,255,0.55); border:1px solid rgba(200,170,220,0.35); color:#7060a0; text-decoration:none; transition:all 0.2s ease; }
+  .social-icon:hover { background:rgba(200,170,220,0.25); transform:translateY(-3px); color:#5040a0; }
+  .social-icon svg { width:18px; height:18px; }
+
+  #theme-toggle { position:fixed; bottom:28px; left:28px; z-index:200; width:44px; height:44px; border-radius:50%; border:1px solid rgba(200,170,230,0.45); background:rgba(255,255,255,0.5); backdrop-filter:blur(20px); cursor:pointer; display:flex; align-items:center; justify-content:center; padding:0; transition:transform 0.35s cubic-bezier(0.34,1.56,0.64,1); }
+  #theme-toggle:hover { transform:scale(1.12) rotate(14deg); }
+  #theme-toggle svg { width:17px; height:17px; position:absolute; transition:opacity 0.3s ease,transform 0.35s cubic-bezier(0.34,1.56,0.64,1); }
+  [data-theme="light"] #icon-sun  { opacity:1; transform:rotate(0deg) scale(1); color:#b070c0; }
+  [data-theme="light"] #icon-moon { opacity:0; transform:rotate(60deg) scale(0.4); color:#8060b8; }
+  [data-theme="dark"]  #icon-sun  { opacity:0; transform:rotate(-60deg) scale(0.4); color:#c090d8; }
+  [data-theme="dark"]  #icon-moon { opacity:1; transform:rotate(0deg) scale(1); color:#c090d8; }
+
+  #cursor-glow { position:fixed; width:300px; height:300px; border-radius:50%; background:radial-gradient(circle,rgba(210,160,230,0.12),transparent 70%); pointer-events:none; z-index:0; transform:translate(-50%,-50%); transition:transform 0.1s linear; }
+
+  .fade-up { opacity:0; transform:translateY(30px); transition:opacity 0.7s ease,transform 0.7s ease; }
+  .fade-up.visible { opacity:1; transform:translateY(0); }
+
+  /* Project page specific */
+  .project-hero { min-height: 60vh; display:flex; align-items:center; padding:140px 24px 80px; }
+  .project-hero-badge { font-family:'Space Mono',monospace; font-size:11px; letter-spacing:0.15em; text-transform:uppercase; color:var(--muted); border:1px solid rgba(180,150,210,0.4); border-radius:100px; padding:6px 16px; display:inline-block; margin-bottom:28px; }
+  .project-title { font-family:'Cormorant Garamond',serif; font-size:clamp(42px,7vw,88px); font-weight:300; line-height:0.95; letter-spacing:-0.02em; color:var(--text); }
+  .project-title em { font-style:italic; background:linear-gradient(135deg,#d090b8,#a080d0,#80a8e8); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+
+  .section-card { background:rgba(255,255,255,0.35); backdrop-filter:blur(20px); border:1px solid rgba(200,175,220,0.3); border-radius:24px; padding:32px; }
+
+  .code-block { background:rgba(250,248,255,0.8); border:1px solid rgba(200,175,220,0.3); border-radius:16px; padding:20px 24px; font-family:'Space Mono',monospace; font-size:12px; line-height:1.8; color:#4a3870; overflow-x:auto; white-space:pre; }
+
+  .data-table { width:100%; border-collapse:collapse; font-size:13px; }
+  .data-table th { font-family:'Space Mono',monospace; font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:#7060a0; background:rgba(200,170,230,0.15); padding:12px 16px; text-align:left; border-bottom:1px solid rgba(200,175,220,0.3); }
+  .data-table td { padding:11px 16px; color:var(--muted); border-bottom:1px solid rgba(200,175,220,0.15); vertical-align:middle; font-size:12.5px; }
+  .data-table td:first-child { color:var(--text); font-weight:500; }
+  .data-table tr:last-child td { border-bottom:none; }
+  .data-table tr:hover td { background:rgba(200,170,230,0.08); transition:background 0.2s; }
+
+  .tech-pill { display:inline-flex; align-items:center; gap:8px; padding:10px 18px; border-radius:100px; background:rgba(255,255,255,0.5); border:1px solid rgba(200,175,220,0.35); font-family:'Space Mono',monospace; font-size:11px; color:#6050a0; }
+  .tech-pill-icon { width:28px; height:28px; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:14px; background:linear-gradient(135deg,rgba(220,185,240,0.5),rgba(180,200,255,0.5)); }
+
+  .stat-box { text-align:center; padding:24px 16px; }
+  .stat-num { font-family:'Cormorant Garamond',serif; font-size:48px; font-weight:300; background:linear-gradient(135deg,#c080b0,#9070c8); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; line-height:1; }
+  .stat-label { font-family:'Space Mono',monospace; font-size:9px; letter-spacing:0.15em; text-transform:uppercase; color:var(--muted); margin-top:6px; }
+
+  .timeline-item { display:flex; gap:20px; padding:20px 0; }
+  .timeline-dot { width:10px; height:10px; border-radius:50%; background:linear-gradient(135deg,#d090c0,#9080d0); box-shadow:0 0 0 3px rgba(200,160,220,0.3); flex-shrink:0; margin-top:5px; }
+  .timeline-line { width:1px; background:linear-gradient(to bottom,rgba(200,170,220,0.4),transparent); margin-left:4px; }
+
+  .result-badge { display:inline-flex; align-items:center; gap:6px; padding:4px 12px; border-radius:100px; font-family:'Space Mono',monospace; font-size:10px; letter-spacing:0.08em; }
+  .result-ok { background:rgba(160,220,180,0.2); border:1px solid rgba(100,180,130,0.35); color:#3a8050; }
+  [data-theme="dark"] .result-ok { background:rgba(40,100,60,0.3); color:#80d0a0; }
+
+  .back-btn { display:inline-flex; align-items:center; gap:8px; font-family:'Space Mono',monospace; font-size:11px; letter-spacing:0.08em; color:var(--muted); text-decoration:none; transition:color 0.2s; }
+  .back-btn:hover { color:var(--text); }
+</style>
+</head>
+<body>
+
+<div id="cursor-glow"></div>
+<div class="mesh-bg">
+  <div class="orb orb-1"></div><div class="orb orb-2"></div>
+  <div class="orb orb-3"></div><div class="orb orb-4"></div><div class="orb orb-5"></div>
+</div>
+
+<!-- NAV -->
+<nav class="glass" id="main-nav">
+  <div class="flex items-center justify-between">
+    <a href="index.html" class="nav-logo">
+      <div class="nav-logo-badge">A</div>
+      <span class="display text-base font-light ml-1" style="color:#4a2860">Ashley</span>
+    </a>
+    <div class="flex items-center gap-6">
+      <a href="index.html" class="back-btn">← Torna al portfolio</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="project-hero max-w-5xl mx-auto px-6 relative z-10">
+  <div class="fade-up">
+    <a href="index.html" class="back-btn mb-8 inline-flex">← Tutti i progetti</a>
+    <div class="project-hero-badge" style="margin-top:20px;">01 · Progetto ITS · Reti e Sistemi</div>
+    <h1 class="project-title mb-6">
+      Rete Aziendale<br><em>Distribuita</em>
+    </h1>
+    <p class="text-lg mb-8 max-w-2xl" style="color:var(--muted);font-weight:300;line-height:1.7;">
+      Progettazione e simulazione di un'infrastruttura di rete enterprise multi-sede con VLAN, routing dinamico RIP v2, DMZ fisica e sicurezza perimetrale tramite ACL.
+    </p>
+    <div class="flex flex-wrap gap-2">
+      <span class="tag">Cisco Packet Tracer</span>
+      <span class="tag">VLAN</span>
+      <span class="tag">RIP v2</span>
+      <span class="tag">DHCP / DNS</span>
+      <span class="tag">VPN IPsec</span>
+      <span class="tag">ACL Firewall</span>
+      <span class="tag">DMZ</span>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="max-w-5xl mx-auto px-6 mb-20 relative z-10 fade-up">
+  <div class="glass-card rounded-3xl overflow-hidden">
+    <div class="grid grid-cols-2 md:grid-cols-4 divide-x divide-y md:divide-y-0" style="border-color:rgba(200,175,220,0.2);">
+      <div class="stat-box">
+        <div class="stat-num">4</div>
+        <div class="stat-label">Sedi collegate</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">12</div>
+        <div class="stat-label">VLAN configurate</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">5</div>
+        <div class="stat-label">Link WAN seriali</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">9</div>
+        <div class="stat-label">Pool DHCP gestiti</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SEZIONE 1: INTRO -->
+<section class="max-w-5xl mx-auto px-6 mb-16 relative z-10 fade-up">
+  <div class="grid md:grid-cols-3 gap-6">
+    <div class="md:col-span-2">
+      <div class="section-label">01 · Introduzione</div>
+      <h2 class="display text-4xl font-light mb-6" style="color:#2a1840">Obiettivi del progetto</h2>
+      <p class="text-sm leading-relaxed mb-4" style="color:var(--muted);font-weight:300;">
+        Il progetto descrive la progettazione e configurazione di una rete aziendale distribuita su quattro sedi: la sede centrale (HQ) a Milano, due filiali a Roma e Napoli, e un Data Center dedicato ai servizi centralizzati. La simulazione è realizzata in Cisco Packet Tracer.
+      </p>
+      <ul class="space-y-3 mt-6">
+        <li class="flex items-start gap-3 text-sm" style="color:var(--muted);">
+          <span style="color:#c080b0;margin-top:2px;">✦</span>
+          Segmentare il traffico tramite <strong style="color:var(--text);">VLAN</strong> per separare uffici, magazzino e direzione
+        </li>
+        <li class="flex items-start gap-3 text-sm" style="color:var(--muted);">
+          <span style="color:#a080d0;margin-top:2px;">✦</span>
+          Garantire la raggiungibilità tra tutte le sedi tramite <strong style="color:var(--text);">routing dinamico RIP v2</strong>
+        </li>
+        <li class="flex items-start gap-3 text-sm" style="color:var(--muted);">
+          <span style="color:#80a8e8;margin-top:2px;">✦</span>
+          Centralizzare i servizi <strong style="color:var(--text);">DHCP e DNS</strong> nel Data Center
+        </li>
+        <li class="flex items-start gap-3 text-sm" style="color:var(--muted);">
+          <span style="color:#c080b0;margin-top:2px;">✦</span>
+          Implementare una <strong style="color:var(--text);">DMZ fisica</strong> per isolare il server Web
+        </li>
+        <li class="flex items-start gap-3 text-sm" style="color:var(--muted);">
+          <span style="color:#a080d0;margin-top:2px;">✦</span>
+          Proteggere il perimetro con <strong style="color:var(--text);">ACL firewall</strong> sulle interfacce WAN
+        </li>
+      </ul>
+    </div>
+    <div class="section-card flex flex-col gap-4">
+      <div class="section-label">Tecnologie</div>
+      <div class="flex flex-col gap-2">
+        <div class="tech-pill"><div class="tech-pill-icon">🔵</div>Cisco Packet Tracer</div>
+        <div class="tech-pill"><div class="tech-pill-icon">🔀</div>Router-PT + NM-1S</div>
+        <div class="tech-pill"><div class="tech-pill-icon">🔌</div>Switch 2960-24TT</div>
+        <div class="tech-pill"><div class="tech-pill-icon">🛡️</div>ACL Estese</div>
+        <div class="tech-pill"><div class="tech-pill-icon">🔒</div>VPN IPsec (doc.)</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="aura-divider max-w-5xl mx-auto mb-16" style="width:calc(100% - 48px);"></div>
+
+<!-- SEZIONE 2: ARCHITETTURA -->
+<section class="max-w-5xl mx-auto px-6 mb-16 relative z-10 fade-up">
+  <div class="section-label">02 · Architettura</div>
+  <h2 class="display text-4xl font-light mb-4" style="color:#2a1840">Dispositivi per sede</h2>
+  <p class="text-sm mb-8" style="color:var(--muted);font-weight:300;">Ogni sede è equipaggiata con router, switch e dispositivi finali. Il Data Center funge da nodo centrale per i servizi condivisi.</p>
+
+  <div class="glass-card rounded-3xl overflow-hidden mb-8">
+    <div class="overflow-x-auto">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Sede</th>
+            <th>Router</th>
+            <th>Switch</th>
+            <th>PC / Server</th>
+            <th>Stampanti</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>🏢 HQ Milano</td><td>1× Router-PT</td><td>1× 2960-24TT</td><td>9× PC</td><td>1×</td></tr>
+          <tr><td>🏢 Filiale Roma</td><td>1× Router-PT</td><td>1× 2960-24TT</td><td>7× PC</td><td>1×</td></tr>
+          <tr><td>🏢 Filiale Napoli</td><td>1× Router-PT</td><td>1× 2960-24TT</td><td>7× PC</td><td>1×</td></tr>
+          <tr><td>🖥️ Data Center</td><td>1× Router-PT</td><td>1× 2960-24TT</td><td>4× Server + 1× Web (DMZ)</td><td>—</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- IP Plan -->
+  <h3 class="display text-2xl font-light mb-4" style="color:#2a1840">Piano di indirizzamento IP</h3>
+  <div class="glass-card rounded-3xl overflow-hidden mb-8">
+    <div class="overflow-x-auto">
+      <table class="data-table">
+        <thead>
+          <tr><th>Sede</th><th>VLAN</th><th>Rete IP</th><th>Gateway</th><th>Uso</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>HQ Milano</td><td>VLAN 10</td><td>192.168.10.0/24</td><td>192.168.10.1</td><td>Uffici</td></tr>
+          <tr><td>HQ Milano</td><td>VLAN 20</td><td>192.168.20.0/24</td><td>192.168.20.1</td><td>Magazzino</td></tr>
+          <tr><td>HQ Milano</td><td>VLAN 30</td><td>192.168.30.0/24</td><td>192.168.30.1</td><td>Direzione</td></tr>
+          <tr><td>HQ Milano</td><td>DMZ</td><td>192.168.100.0/24</td><td>192.168.100.1</td><td>Server Web</td></tr>
+          <tr><td>Filiale Roma</td><td>VLAN 10</td><td>192.168.11.0/24</td><td>192.168.11.1</td><td>Uffici</td></tr>
+          <tr><td>Filiale Roma</td><td>VLAN 20</td><td>192.168.21.0/24</td><td>192.168.21.1</td><td>Magazzino</td></tr>
+          <tr><td>Filiale Roma</td><td>VLAN 30</td><td>192.168.31.0/24</td><td>192.168.31.1</td><td>Direzione</td></tr>
+          <tr><td>Filiale Napoli</td><td>VLAN 10</td><td>192.168.12.0/24</td><td>192.168.12.1</td><td>Uffici</td></tr>
+          <tr><td>Filiale Napoli</td><td>VLAN 20</td><td>192.168.22.0/24</td><td>192.168.22.1</td><td>Magazzino</td></tr>
+          <tr><td>Filiale Napoli</td><td>VLAN 30</td><td>192.168.32.0/24</td><td>192.168.32.1</td><td>Direzione</td></tr>
+          <tr><td>Data Center</td><td>Server LAN</td><td>192.168.5.0/24</td><td>192.168.5.1</td><td>Server interni</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- WAN Links -->
+  <h3 class="display text-2xl font-light mb-4" style="color:#2a1840">Link WAN seriali /30</h3>
+  <div class="glass-card rounded-3xl overflow-hidden">
+    <div class="overflow-x-auto">
+      <table class="data-table">
+        <thead>
+          <tr><th>Collegamento</th><th>IP lato A</th><th>IP lato B</th><th>Rete /30</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>HQ Milano ↔ Filiale Roma</td><td>200.10.10.1</td><td>200.10.10.2</td><td>200.10.10.0/30</td></tr>
+          <tr><td>HQ Milano ↔ Filiale Napoli</td><td>200.20.20.1</td><td>200.20.20.2</td><td>200.20.20.0/30</td></tr>
+          <tr><td>HQ Milano ↔ Data Center</td><td>200.30.30.1</td><td>200.30.30.2</td><td>200.30.30.0/30</td></tr>
+          <tr><td>Filiale Roma ↔ Data Center</td><td>200.40.40.1</td><td>200.40.40.2</td><td>200.40.40.0/30</td></tr>
+          <tr><td>Filiale Napoli ↔ Data Center</td><td>200.50.50.1</td><td>200.50.50.2</td><td>200.50.50.0/30</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<div class="aura-divider max-w-5xl mx-auto mb-16" style="width:calc(100% - 48px);"></div>
+
+<!-- SEZIONE 3: VLAN -->
+<section class="max-w-5xl mx-auto px-6 mb-16 relative z-10 fade-up">
+  <div class="section-label">03 · VLAN</div>
+  <h2 class="display text-4xl font-light mb-4" style="color:#2a1840">Configurazione VLAN</h2>
+  <p class="text-sm mb-8 max-w-2xl" style="color:var(--muted);font-weight:300;">
+    Ogni sede usa tre VLAN per separare logicamente il traffico. Il routing inter-VLAN è gestito dai router con la tecnica <em>router-on-a-stick</em> tramite subinterface dot1Q.
+  </p>
+
+  <div class="grid md:grid-cols-2 gap-6 mb-8">
+    <div class="glass-card rounded-3xl overflow-hidden">
+      <div class="overflow-x-auto">
+        <table class="data-table">
+          <thead><tr><th>VLAN ID</th><th>Nome</th><th>Descrizione</th></tr></thead>
+          <tbody>
+            <tr><td>10</td><td>UFFICI</td><td>PC e stampanti amministrative</td></tr>
+            <tr><td>20</td><td>MAGAZZINO</td><td>Terminali e scanner logistica</td></tr>
+            <tr><td>30</td><td>DIREZIONE</td><td>PC del management aziendale</td></tr>
+            <tr><td>99</td><td>NATIVE</td><td>VLAN nativa trunk (no dati)</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="section-card">
+      <div class="section-label mb-4">Assegnazione porte · HQ Milano</div>
+      <table class="data-table" style="font-size:11.5px;">
+        <thead><tr><th>Porte</th><th>Modalità</th><th>VLAN</th></tr></thead>
+        <tbody>
+          <tr><td>Fa0/1</td><td>Trunk</td><td>10, 20, 30 (native 99)</td></tr>
+          <tr><td>Fa0/2–Fa0/6</td><td>Access</td><td>VLAN 10</td></tr>
+          <tr><td>Fa0/7–Fa0/8</td><td>Access</td><td>VLAN 30</td></tr>
+          <tr><td>Fa0/9–Fa0/10</td><td>Access</td><td>VLAN 20</td></tr>
+          <tr><td>Fa0/11</td><td>Access</td><td>VLAN 10</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="section-label mb-3">Configurazione switch (esempio HQ)</div>
+  <div class="code-block">enable
+configure terminal
+vlan 10
+ name UFFICI
+vlan 20
+ name MAGAZZINO
+vlan 30
+ name DIREZIONE
+vlan 99
+ name NATIVE
+interface Fa0/1
+ switchport mode trunk
+ switchport trunk native vlan 99
+ switchport trunk allowed vlan 10,20,30
+ no shutdown
+interface range Fa0/2-6
+ switchport mode access
+ switchport access vlan 10
+interface range Fa0/7-8
+ switchport mode access
+ switchport access vlan 30
+interface range Fa0/9-10
+ switchport mode access
+ switchport access vlan 20
+end
+write memory</div>
+</section>
+
+<div class="aura-divider max-w-5xl mx-auto mb-16" style="width:calc(100% - 48px);"></div>
+
+<!-- SEZIONE 4: RIP v2 -->
+<section class="max-w-5xl mx-auto px-6 mb-16 relative z-10 fade-up">
+  <div class="section-label">04 · Routing dinamico</div>
+  <h2 class="display text-4xl font-light mb-4" style="color:#2a1840">RIP versione 2</h2>
+  <p class="text-sm mb-6 max-w-2xl" style="color:var(--muted);font-weight:300;">
+    RIP v2 propaga dinamicamente le rotte tra tutti i router della rete. La configurazione usa <code style="font-family:'Space Mono',monospace;font-size:11px;">no auto-summary</code> per supportare VLSM e subnet mask classless.
+  </p>
+
+  <div class="grid md:grid-cols-2 gap-6 mb-6">
+    <div>
+      <div class="section-label mb-3">Configurazione RIP v2 · Router HQ</div>
+      <div class="code-block">router rip
+ version 2
+ no auto-summary
+ network 192.168.10.0
+ network 192.168.20.0
+ network 192.168.30.0
+ network 200.10.10.0
+ network 200.20.20.0
+ network 200.30.30.0</div>
+    </div>
+    <div>
+      <div class="section-label mb-3">Output show ip route · Router HQ</div>
+      <div class="code-block">R  192.168.5.0/24 [120/1] via 200.30.30.2
+C  192.168.10.0/24 directly connected
+R  192.168.11.0/24 [120/1] via 200.10.10.2
+R  192.168.12.0/24 [120/1] via 200.20.20.2
+R  192.168.21.0/24 [120/1] via 200.10.10.2
+R  192.168.31.0/24 [120/1] via 200.10.10.2
+R  200.40.40.0 [120/1] via 200.10.10.2
+               via 200.30.30.2</div>
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="flex flex-wrap gap-4">
+      <div class="flex items-center gap-2 text-sm" style="color:var(--muted);">
+        <span style="color:#c080b0;">✦</span> Supporto VLSM con subnet mask classless
+      </div>
+      <div class="flex items-center gap-2 text-sm" style="color:var(--muted);">
+        <span style="color:#a080d0;">✦</span> no auto-summary per evitare summarizzazione automatica
+      </div>
+      <div class="flex items-center gap-2 text-sm" style="color:var(--muted);">
+        <span style="color:#80a8e8;">✦</span> Convergenza verificata su ogni router
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="aura-divider max-w-5xl mx-auto mb-16" style="width:calc(100% - 48px);"></div>
+
+<!-- SEZIONE 5: DHCP / DNS -->
+<section class="max-w-5xl mx-auto px-6 mb-16 relative z-10 fade-up">
+  <div class="section-label">05 · Servizi centralizzati</div>
+  <h2 class="display text-4xl font-light mb-4" style="color:#2a1840">DHCP &amp; DNS</h2>
+  <p class="text-sm mb-8 max-w-2xl" style="color:var(--muted);font-weight:300;">
+    Il server DHCP (192.168.5.2) e il server DNS (192.168.5.3) risiedono nel Data Center e servono tutte le sedi tramite <code style="font-family:'Space Mono',monospace;font-size:11px;">ip helper-address</code> configurato su ogni subinterface.
+  </p>
+
+  <div class="grid md:grid-cols-2 gap-6">
+    <div>
+      <h3 class="display text-2xl font-light mb-4" style="color:#2a1840">Pool DHCP per sede e VLAN</h3>
+      <div class="glass-card rounded-3xl overflow-hidden">
+        <div class="overflow-x-auto">
+          <table class="data-table" style="font-size:11.5px;">
+            <thead><tr><th>Pool</th><th>Rete</th><th>Range</th></tr></thead>
+            <tbody>
+              <tr><td>HQ-VLAN10-UFFICI</td><td>192.168.10.0/24</td><td>.10–.50</td></tr>
+              <tr><td>HQ-VLAN20-MAGAZZINO</td><td>192.168.20.0/24</td><td>.10–.30</td></tr>
+              <tr><td>HQ-VLAN30-DIREZIONE</td><td>192.168.30.0/24</td><td>.10–.20</td></tr>
+              <tr><td>F1-VLAN10-UFFICI</td><td>192.168.11.0/24</td><td>.10–.50</td></tr>
+              <tr><td>F1-VLAN20-MAGAZZINO</td><td>192.168.21.0/24</td><td>.10–.30</td></tr>
+              <tr><td>F1-VLAN30-DIREZIONE</td><td>192.168.31.0/24</td><td>.10–.20</td></tr>
+              <tr><td>F2-VLAN10-UFFICI</td><td>192.168.12.0/24</td><td>.10–.50</td></tr>
+              <tr><td>F2-VLAN20-MAGAZZINO</td><td>192.168.22.0/24</td><td>.10–.30</td></tr>
+              <tr><td>F2-VLAN30-DIREZIONE</td><td>192.168.32.0/24</td><td>.10–.20</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div>
+      <h3 class="display text-2xl font-light mb-4" style="color:#2a1840">Record DNS interni</h3>
+      <div class="glass-card rounded-3xl overflow-hidden">
+        <table class="data-table">
+          <thead><tr><th>Nome host</th><th>Tipo</th><th>IP</th></tr></thead>
+          <tbody>
+            <tr><td>server.azienda.local</td><td>A</td><td>192.168.5.2</td></tr>
+            <tr><td>dns.azienda.local</td><td>A</td><td>192.168.5.3</td></tr>
+            <tr><td>db.azienda.local</td><td>A</td><td>192.168.5.4</td></tr>
+            <tr><td>files.azienda.local</td><td>A</td><td>192.168.5.5</td></tr>
+            <tr><td>www.azienda.local</td><td>A</td><td>192.168.100.10</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="aura-divider max-w-5xl mx-auto mb-16" style="width:calc(100% - 48px);"></div>
+
+<!-- SEZIONE 6: VPN -->
+<section class="max-w-5xl mx-auto px-6 mb-16 relative z-10 fade-up">
+  <div class="section-label">06 · VPN site-to-site</div>
+  <h2 class="display text-4xl font-light mb-4" style="color:#2a1840">IPsec <em style="font-style:italic;color:#b080c8">documentata</em></h2>
+  <p class="text-sm mb-6 max-w-2xl" style="color:var(--muted);font-weight:300;">
+    La VPN site-to-site è documentata a livello progettuale. Il Router-PT in Packet Tracer non supporta IPsec tramite CLI, ma la configurazione è pronta per hardware reale Cisco 2811+.
+  </p>
+
+  <div class="grid md:grid-cols-3 gap-4 mb-6">
+    <div class="section-card text-center">
+      <div class="text-2xl mb-2">🔐</div>
+      <div class="mono text-xs mb-1" style="color:var(--muted);">IKE Phase 1</div>
+      <div class="text-sm font-medium" style="color:var(--text);">AES 256 + SHA</div>
+      <div class="text-xs mt-1" style="color:var(--muted);">DH group 2 · 86400s</div>
+    </div>
+    <div class="section-card text-center">
+      <div class="text-2xl mb-2">🛡️</div>
+      <div class="mono text-xs mb-1" style="color:var(--muted);">IKE Phase 2</div>
+      <div class="text-sm font-medium" style="color:var(--text);">ESP + AES 128</div>
+      <div class="text-xs mt-1" style="color:var(--muted);">SHA-HMAC · tunnel mode</div>
+    </div>
+    <div class="section-card text-center">
+      <div class="text-2xl mb-2">🔑</div>
+      <div class="mono text-xs mb-1" style="color:var(--muted);">Autenticazione</div>
+      <div class="text-sm font-medium" style="color:var(--text);">Pre-shared key</div>
+      <div class="text-xs mt-1" style="color:var(--muted);">Per ogni coppia di sedi</div>
+    </div>
+  </div>
+
+  <div class="section-label mb-3">Configurazione VPN · HQ → Roma (su hardware reale)</div>
+  <div class="code-block">crypto isakmp policy 10
+ encryption aes 256
+ hash sha
+ authentication pre-share
+ group 2
+ lifetime 86400
+crypto isakmp key CHIAVE_SEGRETA address 200.10.10.2
+
+crypto ipsec transform-set VPN-TRANSFORM esp-aes 128 esp-sha-hmac
+ mode tunnel
+
+ip access-list extended VPN-HQ-ROMA
+ permit ip 192.168.10.0 0.0.0.255 192.168.11.0 0.0.0.255
+ permit ip 192.168.20.0 0.0.0.255 192.168.21.0 0.0.0.255
+ permit ip 192.168.30.0 0.0.0.255 192.168.31.0 0.0.0.255
+
+crypto map VPN-MAP 10 ipsec-isakmp
+ set peer 200.10.10.2
+ set transform-set VPN-TRANSFORM
+ match address VPN-HQ-ROMA
+
+interface Serial2/0
+ crypto map VPN-MAP</div>
+</section>
+
+<div class="aura-divider max-w-5xl mx-auto mb-16" style="width:calc(100% - 48px);"></div>
+
+<!-- SEZIONE 7: FIREWALL / DMZ -->
+<section class="max-w-5xl mx-auto px-6 mb-16 relative z-10 fade-up">
+  <div class="section-label">07 · Sicurezza perimetrale</div>
+  <h2 class="display text-4xl font-light mb-4" style="color:#2a1840">Firewall ACL &amp; <em style="font-style:italic;color:#b080c8">DMZ fisica</em></h2>
+
+  <div class="grid md:grid-cols-2 gap-6 mb-6">
+    <div>
+      <p class="text-sm mb-4 leading-relaxed" style="color:var(--muted);font-weight:300;">
+        In sostituzione del firewall ASA, la sicurezza perimetrale è implementata tramite ACL estese sulle interfacce WAN. L'ACL permette solo traffico autorizzato in ingresso.
+      </p>
+      <div class="flex flex-col gap-2">
+        <div class="flex items-center gap-3 text-sm" style="color:var(--muted);">
+          <span class="result-badge result-ok">UDP 520</span> Traffico RIP v2
+        </div>
+        <div class="flex items-center gap-3 text-sm" style="color:var(--muted);">
+          <span class="result-badge result-ok">UDP 53</span> Query DNS
+        </div>
+        <div class="flex items-center gap-3 text-sm" style="color:var(--muted);">
+          <span class="result-badge result-ok">ICMP</span> Ping diagnostico
+        </div>
+        <div class="flex items-center gap-3 text-sm" style="color:var(--muted);">
+          <span class="result-badge result-ok">TCP 80</span> Traffico HTTP
+        </div>
+        <div class="flex items-center gap-3 text-sm" style="color:var(--muted);">
+          <span class="result-badge result-ok">TCP 443</span> Traffico HTTPS
+        </div>
+        <div class="flex items-center gap-3 text-sm" style="color:var(--muted);">
+          <span style="padding:4px 12px;border-radius:100px;font-family:'Space Mono',monospace;font-size:10px;background:rgba(220,100,100,0.12);border:1px solid rgba(180,80,80,0.3);color:#a04040;">DENY ALL</span> Tutto il resto bloccato
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="section-label mb-3">Configurazione ACL firewall</div>
+      <div class="code-block" style="font-size:11px;">access-list 100 permit udp any any eq 520
+access-list 100 permit udp any any eq 53
+access-list 100 permit icmp any any
+access-list 100 permit tcp any any eq 80
+access-list 100 permit tcp any any eq 443
+access-list 100 deny ip any any
+
+! Applicata su interfacce WAN:
+interface Serial2/0
+ ip access-group 100 in</div>
+    </div>
+  </div>
+
+  <!-- DMZ -->
+  <h3 class="display text-2xl font-light mb-4" style="color:#2a1840">DMZ fisica · Data Center</h3>
+  <p class="text-sm mb-6" style="color:var(--muted);font-weight:300;">Il Server Web (192.168.100.10) è collegato direttamente a una porta dedicata del Router DC (FastEthernet1/0), separata fisicamente dalla rete interna.</p>
+
+  <div class="grid md:grid-cols-2 gap-6">
+    <div class="glass-card rounded-3xl overflow-hidden">
+      <table class="data-table">
+        <thead><tr><th>Interfaccia Router DC</th><th>Rete</th><th>IP</th><th>Ruolo</th></tr></thead>
+        <tbody>
+          <tr><td>FastEthernet0/0</td><td>LAN interna</td><td>192.168.5.1/24</td><td>Server DHCP, DNS, DB</td></tr>
+          <tr><td>FastEthernet1/0</td><td>DMZ</td><td>192.168.100.1/24</td><td>Server Web isolato</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <div class="section-label mb-3">ACL zona DMZ</div>
+      <div class="code-block" style="font-size:11px;">ip access-list extended ACL-DMZ
+ permit tcp any host 192.168.100.10 eq 80
+ permit tcp any host 192.168.100.10 eq 443
+ permit tcp any host 192.168.100.10 established
+ deny ip host 192.168.100.10 192.168.0.0 0.0.255.255
+ permit ip any any
+
+interface FastEthernet1/0
+ ip access-group ACL-DMZ in</div>
+    </div>
+  </div>
+</section>
+
+<div class="aura-divider max-w-5xl mx-auto mb-16" style="width:calc(100% - 48px);"></div>
+
+<!-- SEZIONE 8: TEST -->
+<section class="max-w-5xl mx-auto px-6 mb-16 relative z-10 fade-up">
+  <div class="section-label">08 · Test di connettività</div>
+  <h2 class="display text-4xl font-light mb-4" style="color:#2a1840">Verifica risultati</h2>
+  <p class="text-sm mb-8 max-w-2xl" style="color:var(--muted);font-weight:300;">
+    Test eseguiti dalla workstation HQ-U1 (192.168.10.10, assegnata via DHCP). La perdita del primo pacchetto verso le filiali è normale in Packet Tracer per la convergenza iniziale di RIP v2.
+  </p>
+
+  <div class="glass-card rounded-3xl overflow-hidden">
+    <table class="data-table">
+      <thead><tr><th>Destinazione</th><th>IP</th><th>Risultato</th><th>Note</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>Server DHCP (DC)</td>
+          <td>192.168.5.2</td>
+          <td><span class="result-badge result-ok">4/4 ✓</span></td>
+          <td style="color:var(--muted);">10ms avg</td>
+        </tr>
+        <tr>
+          <td>PC Uffici Roma</td>
+          <td>192.168.11.10</td>
+          <td><span class="result-badge result-ok">3/4 ✓</span></td>
+          <td style="color:var(--muted);">1° pkt perso per convergenza RIP</td>
+        </tr>
+        <tr>
+          <td>PC Uffici Napoli</td>
+          <td>192.168.12.10</td>
+          <td><span class="result-badge result-ok">3/4 ✓</span></td>
+          <td style="color:var(--muted);">1° pkt perso per convergenza RIP</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<div class="aura-divider max-w-5xl mx-auto mb-16" style="width:calc(100% - 48px);"></div>
+
+<!-- SEZIONE 9: CONCLUSIONI -->
+<section class="max-w-5xl mx-auto px-6 mb-32 relative z-10 fade-up">
+  <div class="section-label">09 · Conclusioni</div>
+  <h2 class="display text-4xl font-light mb-6" style="color:#2a1840">Risultati <em style="font-style:italic;color:#b080c8">ottenuti</em></h2>
+
+  <div class="grid md:grid-cols-2 gap-4 mb-8">
+    <div class="section-card">
+      <div class="text-lg mb-2">🔒</div>
+      <h4 class="font-medium mb-2" style="color:var(--text);">Sicurezza</h4>
+      <p class="text-sm" style="color:var(--muted);font-weight:300;">Separazione traffico tramite VLAN, ACL firewall su tutte le interfacce WAN, DMZ fisica per il server Web.</p>
+    </div>
+    <div class="section-card">
+      <div class="text-lg mb-2">📈</div>
+      <h4 class="font-medium mb-2" style="color:var(--text);">Scalabilità</h4>
+      <p class="text-sm" style="color:var(--muted);font-weight:300;">RIP v2 propaga automaticamente le nuove rotte senza intervento manuale.</p>
+    </div>
+    <div class="section-card">
+      <div class="text-lg mb-2">🎯</div>
+      <h4 class="font-medium mb-2" style="color:var(--text);">Centralizzazione</h4>
+      <p class="text-sm" style="color:var(--muted);font-weight:300;">Un unico server DHCP e DNS serve tutte le sedi tramite ip helper-address.</p>
+    </div>
+    <div class="section-card">
+      <div class="text-lg mb-2">🔄</div>
+      <h4 class="font-medium mb-2" style="color:var(--text);">Alta disponibilità</h4>
+      <p class="text-sm" style="color:var(--muted);font-weight:300;">Il Data Center è raggiungibile da ogni sede tramite percorsi ridondanti via HQ e direttamente.</p>
+    </div>
+  </div>
+
+  <div class="glass-card rounded-3xl p-8 text-center">
+    <p class="display text-2xl font-light mb-6" style="color:#4a2860;">Tutti i test di connettività hanno dato esito <em style="font-style:italic;color:#b080c8;">positivo</em></p>
+    <a href="index.html" class="btn-aura">← Torna al portfolio</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="relative z-10">
+  <div class="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+    <span style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.1em;">© 2026 Ashley · Progetto Reti e Sistemi ITS</span>
+    <div class="flex items-center gap-3">
+      <a href="https://www.linkedin.com/in/ashley-victoria-d-151601396" target="_blank" class="social-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+      </a>
+      <a href="https://github.com/ashleyds03" target="_blank" class="social-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+      </a>
+      <a href="mailto:ashleydalsoglio@gmail.com" class="social-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="3"/><polyline points="2,4 12,13 22,4"/></svg>
+      </a>
+    </div>
+  </div>
+</footer>
+
+<!-- Theme toggle -->
+<button id="theme-toggle" aria-label="Cambia tema">
+  <svg id="icon-sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+  <svg id="icon-moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+</button>
+
+<script>
+  (function(){
+    var h = document.documentElement;
+    h.setAttribute('data-theme', localStorage.getItem('sofia-theme') || 'light');
+  })();
+
+  window.addEventListener('DOMContentLoaded', function(){
+    var html = document.documentElement;
+
+    document.getElementById('theme-toggle').addEventListener('click', function(){
+      var next = html.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+      html.setAttribute('data-theme', next);
+      localStorage.setItem('sofia-theme', next);
+    });
+
+    var nav = document.getElementById('main-nav');
+    var lastScroll = 0;
+    window.addEventListener('scroll', function(){
+      var current = window.scrollY;
+      if (current > 80 && current > lastScroll) {
+        nav.classList.add('hidden-nav');
+      } else {
+        nav.classList.remove('hidden-nav');
+      }
+      lastScroll = current;
+    }, { passive: true });
+
+    var glow = document.getElementById('cursor-glow');
+    document.addEventListener('mousemove', function(e){
+      glow.style.left = e.clientX + 'px';
+      glow.style.top  = e.clientY + 'px';
+    });
+
+    var obs = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if(e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.08 });
+    document.querySelectorAll('.fade-up').forEach(function(el){ obs.observe(el); });
+  });
+</script>
+</body>
+</html>

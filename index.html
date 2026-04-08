@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Ashley · Cybersecurity</title>
-<link rel="icon" type="image/svg+xml" href="assets/favicon (1).svg">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
 <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet">
 <script src="https://cdn.tailwindcss.com"></script>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&family=Space+Mono:wght@400&display=swap" rel="stylesheet">
@@ -64,6 +64,27 @@ tailwind.config = {
   [data-theme="dark"] .mobile-menu a { color: #c8b8e8; }
   [data-theme="dark"] .mobile-menu a:hover { color: #f0eaf8; }
 
+  [data-theme="dark"] .tooltip:before {
+    background: rgba(20,10,36,0.96);
+    color: #e8d8f8;
+  }
+  [data-theme="dark"] .tooltip:after { border-top-color: rgba(20,10,36,0.96); }
+
+  .tooltip:before {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.04em;
+    background: rgba(30,18,50,0.92);
+    backdrop-filter: blur(12px);
+    color: #e8d8f8;
+    border-radius: 8px;
+    padding: 5px 10px;
+  }
+  .tooltip:after { border-top-color: rgba(30,18,50,0.92); }
+
+  /* DAISY: toast fisso in basso a destra  */
+  .toast { z-index: 300; }
+
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
   body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; overflow-x: hidden; }
@@ -84,7 +105,7 @@ tailwind.config = {
   .glass-card { background:rgba(255,255,255,0.5); backdrop-filter:blur(30px) saturate(200%); -webkit-backdrop-filter:blur(30px) saturate(200%); border:1px solid rgba(255,255,255,0.7); box-shadow:0 16px 48px rgba(160,130,190,0.15),inset 0 1px 0 rgba(255,255,255,0.9),inset 0 -1px 0 rgba(200,160,220,0.1); transition:transform 0.3s ease,box-shadow 0.3s ease; }
   .glass-card:hover { transform:translateY(-4px); box-shadow:0 24px 64px rgba(160,130,190,0.22),inset 0 1px 0 rgba(255,255,255,0.9); }
 
-  /* ── NAVBAR ── */
+  /* NAVBAR  */
   nav { position:fixed; top:20px; left:50%; transform:translateX(-50%); z-index:100; width:calc(100% - 48px); max-width:960px; border-radius:100px; padding:14px 32px; transition:opacity 0.4s ease,transform 0.4s ease; }
   nav.hidden-nav { opacity:0; transform:translateX(-50%) translateY(-20px); pointer-events:none; }
   @media(max-width:640px){ nav { width:calc(100% - 32px); padding:12px 20px; border-radius:20px; } }
@@ -138,19 +159,12 @@ tailwind.config = {
   .btn-outline-aura { display:inline-flex; align-items:center; gap:10px; background:rgba(255,255,255,0.3); backdrop-filter:blur(16px); border:1px solid rgba(200,170,220,0.5); border-radius:100px; padding:13px 28px; font-size:14px; font-family:'DM Sans',sans-serif; color:#5040a0; text-decoration:none; transition:all 0.3s ease; cursor:pointer; }
   .btn-outline-aura:hover { background:rgba(200,170,220,0.2); transform:translateY(-2px); }
 
-  /* card disabilitata per i progetti prossimamente */
   .card-disabled { opacity: 0.45; pointer-events: none; }
   .card-disabled:hover { transform: none !important; }
 
-  /* badge "in lavorazione" */
-  .wip-badge {
-    display: inline-flex; align-items: center; gap: 5px;
-    font-family: 'Space Mono', monospace; font-size: 9px;
-    letter-spacing: 0.12em; text-transform: uppercase;
-    color: #9a70b8; border: 1px solid rgba(180,140,210,0.35);
-    border-radius: 100px; padding: 3px 10px; margin-bottom: 12px;
-  }
-  .wip-dot { width:5px; height:5px; border-radius:50%; background:#c090d0; animation: wipPulse 2s ease-in-out infinite; }
+  /* wip badge custom */
+  .wip-badge { display:inline-flex; align-items:center; gap:5px; font-family:'Space Mono',monospace; font-size:9px; letter-spacing:0.12em; text-transform:uppercase; color:#9a70b8; border:1px solid rgba(180,140,210,0.35); border-radius:100px; padding:3px 10px; margin-bottom:12px; }
+  .wip-dot { width:5px; height:5px; border-radius:50%; background:#c090d0; animation:wipPulse 2s ease-in-out infinite; }
   @keyframes wipPulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
 
   .tl-dot { width:10px; height:10px; border-radius:50%; background:linear-gradient(135deg,#d090c0,#9080d0); box-shadow:0 0 0 3px rgba(200,160,220,0.3); flex-shrink:0; margin-top:5px; }
@@ -203,7 +217,18 @@ tailwind.config = {
   <div class="orb orb-3"></div><div class="orb orb-4"></div><div class="orb orb-5"></div>
 </div>
 
-<!-- mobile menù -->
+<!--DAISY: Toast — appare in basso a destra dopo invio form -->
+<div class="toast toast-end toast-bottom" id="toast-container" style="display:none; z-index:300;">
+  <div class="alert" style="background:rgba(255,255,255,0.7);backdrop-filter:blur(20px);border:1px solid rgba(200,170,220,0.4);border-radius:16px;box-shadow:0 8px 32px rgba(160,130,190,0.2);color:#3a2850;font-family:'DM Sans',sans-serif;font-size:14px;gap:10px;min-width:260px;">
+    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#a080d0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+    <div>
+      <div style="font-weight:500;margin-bottom:2px;">Messaggio inviato!</div>
+      <div style="font-size:12px;color:#7a6d85;">Ti risponderò il prima possibile.</div>
+    </div>
+  </div>
+</div>
+
+<!-- mobile menu -->
 <div class="mobile-menu" id="mobile-menu">
   <a href="#about" onclick="closeMenu()">Chi sono</a>
   <a href="#services" onclick="closeMenu()">Servizi</a>
@@ -227,7 +252,7 @@ tailwind.config = {
   </button>
 </nav>
 
-<!-- ── THEME TOGGLE ── -->
+<!-- theme toggle -->
 <button id="theme-toggle" title="Cambia tema" aria-label="Cambia tema">
   <svg id="icon-sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
     <circle cx="12" cy="12" r="4.5"/>
@@ -344,10 +369,17 @@ tailwind.config = {
   <p class="text-base mb-12 max-w-lg" style="color:#7a6d85; font-weight:300;">I progetti che realizzo durante il percorso ITS — dalla progettazione alla simulazione.</p>
   <div class="grid md:grid-cols-2 gap-6">
 
-    <!-- Progetto 01  -->
+    <!-- Progetto 01 -->
     <div class="glass-card rounded-3xl p-8 relative overflow-hidden">
       <span class="project-num">01</span>
-      <div class="wip-badge"><span class="wip-dot"></span>In lavorazione</div>
+
+      <!-- DAISY: Badge "In lavorazione" -->
+      <div class="mb-3">
+        <span class="badge badge-outline" style="font-family:'Space Mono',monospace;font-size:9px;letter-spacing:0.1em;border-color:rgba(180,140,210,0.45);color:#9a70b8;background:rgba(200,160,225,0.1);gap:5px;border-radius:100px;padding:4px 10px;">
+          <span class="wip-dot"></span>IN LAVORAZIONE
+        </span>
+      </div>
+
       <div class="flex flex-wrap gap-2 mb-4">
         <span class="tag">Cisco Packet Tracer</span>
         <span class="tag">VLAN</span>
@@ -358,50 +390,56 @@ tailwind.config = {
         Progettazione di una rete con più LAN interconnesse a livello IP. Configurazione di VLAN e routing simulati su Cisco Packet Tracer, con documentazione delle scelte progettuali.
       </p>
       <div class="flex gap-3">
-        <a class="btn-outline-aura text-xs py-2 px-4">Leggi →</a>
+        <a href="rete-aziendale.html" class="btn-outline-aura text-xs py-2 px-4">Leggi →</a>
       </div>
     </div>
 
     <!-- Progetto 02 -->
     <div class="glass-card rounded-3xl p-8 relative overflow-hidden card-disabled">
       <span class="project-num" style="opacity:0.15;">02</span>
-      <div class="flex flex-wrap gap-2 mb-4">
-        <span class="tag" style="opacity:0.5;">Prossimamente</span>
+
+      <!-- DAISY: Badge "Prossimamente" -->
+      <div class="mb-3">
+        <span class="badge badge-outline" style="font-family:'Space Mono',monospace;font-size:9px;letter-spacing:0.1em;border-color:rgba(180,160,200,0.3);color:#b0a0c0;background:rgba(200,180,220,0.08);border-radius:100px;padding:4px 10px;">
+          PROSSIMAMENTE
+        </span>
       </div>
+
       <h3 class="display text-2xl font-light mb-3" style="color:#2a1840;opacity:0.5;">Progetto 2</h3>
-      <p class="text-sm leading-relaxed mb-6" style="color:#7a6d85;font-weight:300;opacity:0.6;">
-        Ancora in arrivo — il percorso è appena cominciato. Torna a trovarmi presto.
-      </p>
+      <p class="text-sm leading-relaxed mb-6" style="color:#7a6d85;font-weight:300;opacity:0.6;">Ancora in arrivo — il percorso è appena cominciato. Torna a trovarmi presto.</p>
       <div class="flex gap-3">
         <span class="btn-outline-aura text-xs py-2 px-4" style="opacity:0.4;cursor:default;">Leggi →</span>
       </div>
     </div>
 
-    <!-- Progetto 03  -->
+    <!-- Progetto 03 -->
     <div class="glass-card rounded-3xl p-8 relative overflow-hidden card-disabled">
       <span class="project-num" style="opacity:0.15;">03</span>
-      <div class="flex flex-wrap gap-2 mb-4">
-        <span class="tag" style="opacity:0.5;">Prossimamente</span>
+
+      <div class="mb-3">
+        <span class="badge badge-outline" style="font-family:'Space Mono',monospace;font-size:9px;letter-spacing:0.1em;border-color:rgba(180,160,200,0.3);color:#b0a0c0;background:rgba(200,180,220,0.08);border-radius:100px;padding:4px 10px;">
+          PROSSIMAMENTE
+        </span>
       </div>
+
       <h3 class="display text-2xl font-light mb-3" style="color:#2a1840;opacity:0.5;">Progetto 3</h3>
-      <p class="text-sm leading-relaxed mb-6" style="color:#7a6d85;font-weight:300;opacity:0.6;">
-        Ancora in arrivo — il percorso è appena cominciato. Torna a trovarmi presto.
-      </p>
+      <p class="text-sm leading-relaxed mb-6" style="color:#7a6d85;font-weight:300;opacity:0.6;">Ancora in arrivo — il percorso è appena cominciato. Torna a trovarmi presto.</p>
       <div class="flex gap-3">
         <span class="btn-outline-aura text-xs py-2 px-4" style="opacity:0.4;cursor:default;">Leggi →</span>
       </div>
     </div>
 
-    <!-- Progetto 04  -->
+    <!-- Progetto 04 -->
     <div class="glass-card rounded-3xl p-8 relative overflow-hidden card-disabled">
       <span class="project-num" style="opacity:0.15;">04</span>
-      <div class="flex flex-wrap gap-2 mb-4">
-        <span class="tag" style="opacity:0.5;">Prossimamente</span>
+      <div class="mb-3">
+        <span class="badge badge-outline" style="font-family:'Space Mono',monospace;font-size:9px;letter-spacing:0.1em;border-color:rgba(180,160,200,0.3);color:#b0a0c0;background:rgba(200,180,220,0.08);border-radius:100px;padding:4px 10px;">
+          PROSSIMAMENTE
+        </span>
       </div>
+
       <h3 class="display text-2xl font-light mb-3" style="color:#2a1840;opacity:0.5;">Progetto 4</h3>
-      <p class="text-sm leading-relaxed mb-6" style="color:#7a6d85;font-weight:300;opacity:0.6;">
-        Ancora in arrivo — il percorso è appena cominciato. Torna a trovarmi presto.
-      </p>
+      <p class="text-sm leading-relaxed mb-6" style="color:#7a6d85;font-weight:300;opacity:0.6;">Ancora in arrivo — il percorso è appena cominciato. Torna a trovarmi presto.</p>
       <div class="flex gap-3">
         <span class="btn-outline-aura text-xs py-2 px-4" style="opacity:0.4;cursor:default;">Leggi →</span>
       </div>
@@ -410,11 +448,10 @@ tailwind.config = {
   </div>
 </section>
 
-
 <!-- contatti -->
 <section id="contact" class="px-6 mb-24 max-w-3xl mx-auto fade-up">
   <div class="text-center mb-12">
-    <h2 class="display text-5xl font-light mb-4"  <em style="font-style:italic;color:#b080c8"> Get in touch!</em></h2>
+    <h2 class="display text-5xl font-light mb-4" <em style="font-style:italic;color:#b080c8">Get in touch!</em></h2>
     <p class="text-base" style="color:#7a6d85;font-weight:300;">Hai un progetto, una domanda, o vuoi solo scambiare due chiacchiere di cybersecurity? Scrivimi!</p>
   </div>
   <div class="glass-card rounded-3xl p-10 relative overflow-hidden">
@@ -437,11 +474,13 @@ tailwind.config = {
       <label class="text-xs mb-2 block" style="color:#9a8dab;font-family:'Space Mono',monospace;letter-spacing:0.1em;">MESSAGGIO</label>
       <textarea rows="4" placeholder="Raccontami tutto..." class="contact-input" style="resize:none;"></textarea>
     </div>
-    <button class="btn-aura w-full justify-center">Invia messaggio →</button>
+
+    <!-- ── DAISY: Il click chiama showToast() che mostra il toast DaisyUI ── -->
+    <button class="btn-aura w-full justify-center" onclick="showToast()">Invia messaggio →</button>
   </div>
 </section>
 
-<!-- footer-->
+<!-- footer -->
 <footer class="relative z-10">
   <div class="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
     <span style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.1em;">© 2026 Tutti i diritti riservati · Made with ♥</span>
@@ -457,7 +496,7 @@ tailwind.config = {
       </a>
     </div>
   </div>
-</footer>
+</section>
 
 <script>
   (function(){
@@ -516,6 +555,21 @@ tailwind.config = {
   function closeMenu(){
     document.getElementById('mobile-menu').classList.remove('open');
     document.getElementById('hamburger').classList.remove('open');
+  }
+
+  function showToast(){
+    var toast = document.getElementById('toast-container');
+    toast.style.display = 'flex';
+    toast.style.opacity = '1';
+    setTimeout(function(){
+      toast.style.transition = 'opacity 0.4s ease';
+      toast.style.opacity = '0';
+      setTimeout(function(){
+        toast.style.display = 'none';
+        toast.style.opacity = '1';
+        toast.style.transition = '';
+      }, 400);
+    }, 3000);
   }
 </script>
 </body>
